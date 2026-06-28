@@ -5,6 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from src.models import Application, ApplicationStatus, ResumeBranch
+from src.models.coach_inquiry import CoachInquiry, CoachInquiryStatus
 from src.services.time_helpers import week_range
 
 
@@ -46,8 +47,17 @@ def compute_stats(db: Session, user_id: UUID, monday: date) -> dict[str, int]:
     )
     exports = sum(len(r.exported_pdf_urls or []) for r in rows)
 
-    # coach_inquiries：CoachInquiry 表在 Plan 7 创建，届时接入
-    coach_inquiries = 0
+    coach_inquiries = (
+        db.query(func.count(CoachInquiry.id))
+        .filter(
+            CoachInquiry.user_id == user_id,
+            CoachInquiry.created_at >= start,
+            CoachInquiry.created_at <= end,
+            CoachInquiry.status != CoachInquiryStatus.DROPPED,
+        )
+        .scalar()
+        or 0
+    )
 
     total_active = (
         db.query(func.count(Application.id))
