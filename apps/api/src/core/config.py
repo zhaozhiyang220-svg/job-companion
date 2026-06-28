@@ -42,6 +42,13 @@ class Settings(BaseSettings):
     s3_access_key_id: str = ""
     s3_secret_access_key: str = ""
 
+    notifier_type: str = "print"  # print | feishu | telegram | email
+    feishu_webhook_url: str = ""
+    telegram_bot_token: str = ""
+    telegram_chat_id: str = ""
+
+    internal_dashboard_password: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:
