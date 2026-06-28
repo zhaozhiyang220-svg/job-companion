@@ -30,6 +30,37 @@
   "common": {
     "module_wip": "模块开发中，详见对应 Plan。",
     "disguise": "伪装",
-    "loading": "加载中…"
+    "loading": "加载中…",
+    "delete": "删除",
+    "edit": "编辑",
+    "collapse": "收起",
+    "add": "添加"
+  },
+  "master_resume": {
+    "title": "我的主简历",
+    "empty": "还没有主简历，先上传你的现有简历开始",
+    "choose_upload": "上传简历",
+    "choose_intake": "让 AI 帮我挖经历（应届生推荐）",
+    "drop_or_click": "拖入 PDF / DOCX，或点击选择",
+    "uploading": "上传中…",
+    "parsing": "AI 正在结构化解析…",
+    "diagnose": "AI 含金量诊断",
+    "diagnosing": "诊断中…",
+    "score": "综合 {score}/100",
+    "ability": "能力",
+    "project": "项目",
+    "experience": "经历",
+    "weak_marker": "含金量低",
+    "current_company_warning": "这是你现在的公司，导出时默认脱敏",
+    "new_ability": "新能力",
+    "new_project": "新项目",
+    "new_company": "新公司",
+    "title_field": "职位",
+    "period_field": "时间段",
+    "scope_field": "职责描述",
+    "intake_send": "发送",
+    "intake_input_placeholder": "说说你的经历…",
+    "intake_finish": "完成并生成主简历",
+    "intake_generating": "生成主简历…"
   }
 }

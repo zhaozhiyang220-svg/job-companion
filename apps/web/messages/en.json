@@ -30,6 +30,37 @@
   "common": {
     "module_wip": "Module in progress — see the matching plan.",
     "disguise": "Disguise",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "delete": "Delete",
+    "edit": "Edit",
+    "collapse": "Collapse",
+    "add": "Add"
+  },
+  "master_resume": {
+    "title": "Master Resume",
+    "empty": "No master resume yet — start by uploading your existing resume",
+    "choose_upload": "Upload resume",
+    "choose_intake": "Let AI dig out my experience (recommended for grads)",
+    "drop_or_click": "Drop a PDF / DOCX, or click to choose",
+    "uploading": "Uploading…",
+    "parsing": "AI is parsing into cards…",
+    "diagnose": "AI quality check",
+    "diagnosing": "Diagnosing…",
+    "score": "Overall {score}/100",
+    "ability": "Abilities",
+    "project": "Projects",
+    "experience": "Experience",
+    "weak_marker": "Low value",
+    "current_company_warning": "This is your current employer; masked by default on export",
+    "new_ability": "New ability",
+    "new_project": "New project",
+    "new_company": "New company",
+    "title_field": "Title",
+    "period_field": "Period",
+    "scope_field": "Responsibilities",
+    "intake_send": "Send",
+    "intake_input_placeholder": "Tell me about your experience…",
+    "intake_finish": "Finish and build master resume",
+    "intake_generating": "Building master resume…"
   }
 }
