@@ -13,6 +13,7 @@ from src.routers import (  # noqa: E402
     application,
     auth,
     health,
+    investment,
     master_resume,
     me,
     resource,
@@ -27,3 +28,4 @@ app.include_router(master_resume.router)
 app.include_router(application.router)
 app.include_router(resume_branch.router)
 app.include_router(resource.router)
+app.include_router(investment.router)
