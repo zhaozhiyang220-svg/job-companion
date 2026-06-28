@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports: ["5432:5432"]
+    environment:
+      POSTGRES_USER: jc
+      POSTGRES_PASSWORD: jc_dev
+      POSTGRES_DB: jc_dev
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jc -d jc_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports: ["6379:6379"]
+
+  api:
+    build:
+      context: ../apps/api
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: ../apps/api/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://jc:jc_dev@postgres:5432/jc_dev
+      REDIS_URL: redis://redis:6379/0
+    ports: ["8000:8000"]
+    volumes: ["../apps/api:/app"]
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload --app-dir .
+
+  web:
+    build:
+      context: ../apps/web
+      dockerfile: Dockerfile
+    depends_on: [api]
+    env_file: ../apps/web/.env
+    ports: ["3000:3000"]
+    volumes:
+      - ../apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    command: pnpm dev
+
+volumes:
+  pgdata:
