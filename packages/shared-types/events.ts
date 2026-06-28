@@ -11,6 +11,9 @@ export const Events = {
   MASTER_RESUME_DIAGNOSED: 'master_resume_diagnosed',
   INTAKE_STARTED: 'intake_started',
   INTAKE_FINALIZED: 'intake_finalized',
+  OPPORTUNITY_CREATED: 'opportunity_created',
+  OPPORTUNITY_OPENED: 'opportunity_opened',
+  OPPORTUNITY_ARCHIVED: 'opportunity_archived',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]
