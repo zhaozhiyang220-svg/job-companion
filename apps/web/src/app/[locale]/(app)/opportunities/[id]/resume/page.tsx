@@ -26,7 +26,11 @@ export default function ResumeTab({ params }: { params: Promise<{ id: string }> 
 
   return (
     <div className="flex min-h-[60vh] gap-6">
-      <JDInsightPanel jp={appData?.job_posting} matchScore={branch?.match_score ?? null} />
+      <JDInsightPanel
+        jp={appData?.job_posting}
+        matchScore={branch?.match_score ?? null}
+        appId={appId}
+      />
       <section className="flex-1 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <BranchSwitcher appId={appId} currentId={activeId} onPick={setActiveId} />

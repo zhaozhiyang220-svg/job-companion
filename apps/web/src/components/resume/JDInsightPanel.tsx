@@ -1,13 +1,16 @@
 'use client'
 import { useTranslations } from 'next-intl'
 import type { JobPosting } from '@/hooks/useApplications'
+import { LinkedResourcesPanel } from './LinkedResourcesPanel'
 
 export function JDInsightPanel({
   jp,
   matchScore,
+  appId,
 }: {
   jp: JobPosting | undefined
   matchScore: number | null
+  appId: string
 }) {
   const t = useTranslations('resume_tab')
   const reqs = jp?.requirements_parsed ?? {}
@@ -22,6 +25,7 @@ export function JDInsightPanel({
       <Block title={t('keywords')} items={[...(reqs.hard ?? []), ...(reqs.soft ?? [])]} />
       <Block title={t('preferences')} items={jp?.hidden_preferences ?? []} />
       <Block title={t('red_flags')} items={jp?.red_flags ?? []} />
+      <LinkedResourcesPanel appId={appId} />
     </aside>
   )
 }
