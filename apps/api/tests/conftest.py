@@ -4,6 +4,7 @@ import pytest
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
+import src.models  # noqa: F401  确保所有模型注册到 Base.metadata
 from src.core.config import get_settings
 from src.core.db import Base
 

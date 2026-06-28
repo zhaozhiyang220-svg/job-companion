@@ -1,8 +1,10 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
 from sqlalchemy.orm import Session, selectinload
 
+from src.core.config import get_settings
 from src.core.db import get_db
 from src.core.deps import current_user
 from src.core.security import decrypt_field
@@ -15,7 +17,10 @@ from src.schemas.resume_branch import (
 )
 from src.services.patch_generator import generate_patch
 from src.services.patch_ops import RewriteTooLargeError, apply_operations
+from src.services.pdf_renderer import render_pdf
 from src.services.resume_scorer import score_branch
+from src.services.storage import _client, presign_get
+from src.services.template_renderer import render_html
 
 router = APIRouter(
     prefix="/api/v1/applications/{app_id}/branches", tags=["resume-branch"]
@@ -269,3 +274,45 @@ def rollback_to(
     db.refresh(new)
     master = _serialize_master(_get_master(user, db))
     return _detail(new, apply_operations(master, new.patch), master)
+
+
+class ExportIn(BaseModel):
+    language: str | None = None
+    mask_current_company: bool = True
+
+
+class ExportOut(BaseModel):
+    pdf_url: str
+
+
+@router.post("/{branch_id}/export", response_model=ExportOut)
+def export_branch(
+    app_id: UUID,
+    branch_id: UUID,
+    body: ExportIn,
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+) -> ExportOut:
+    _get_app(app_id, user, db)
+    b = _get_branch(db, app_id, branch_id)
+    r = _get_master(user, db)
+    master = _serialize_master(r)
+    rendered = apply_operations(master, b.patch)
+    rendered["basic_info"] = r.basic_info or {}
+    lang = body.language or b.language or "zh"
+    html = render_html(rendered, lang, body.mask_current_company)
+    pdf_bytes = render_pdf(html)
+    key = f"users/{user.id}/exports/{branch_id}-{uuid4()}.pdf"
+    _client().put_object(
+        Bucket=get_settings().s3_bucket,
+        Key=key,
+        Body=pdf_bytes,
+        ContentType="application/pdf",
+    )
+    url = presign_get(key, expires_in=7 * 86400)
+    b.exported_pdf_urls = [
+        *b.exported_pdf_urls,
+        {"key": key, "url": url, "language": lang, "masked": body.mask_current_company},
+    ]
+    db.commit()
+    return ExportOut(pdf_url=url)

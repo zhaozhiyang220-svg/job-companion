@@ -22,6 +22,7 @@ dependencies = [
   "pypdfium2>=4.30.0",
   "python-docx>=1.1.2",
   "jinja2>=3.1.4",
+  "weasyprint>=62.3",
 ]
 
 [project.optional-dependencies]
@@ -56,7 +57,7 @@ mypy_path = "src"
 
 [[tool.mypy.overrides]]
 # 这些第三方库没有类型存根
-module = ["pypdfium2.*", "docx.*"]
+module = ["pypdfium2.*", "docx.*", "weasyprint.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
