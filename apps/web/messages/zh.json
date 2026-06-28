@@ -64,6 +64,8 @@
     "gate_title": "温馨提示",
     "gate_capacity_active": "你已经有 20 个进行中机会了，先归档一些再继续。",
     "gate_capacity_monthly": "30 天内新建机会数已达上限。要不要找 Coach 帮你聚焦？",
+    "gate_capacity_resources": "资源数已达上限。",
+    "gate_capacity_collections": "合集数已达上限。",
     "gate_close": "关闭",
     "gate_find_coach": "找 Coach"
   },

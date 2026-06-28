@@ -1,17 +1,30 @@
 'use client'
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { CoachInquiryDrawer } from '@/components/coach/CoachInquiryDrawer'
+
+const MSG_KEY: Record<string, string> = {
+  capacity_active: 'gate_capacity_active',
+  capacity_monthly: 'gate_capacity_monthly',
+  capacity_resources: 'gate_capacity_resources',
+  capacity_collections: 'gate_capacity_collections',
+}
 
 export function CapacityGate({ code, onClose }: { code: string; onClose: () => void }) {
   const t = useTranslations('opportunities')
-  const { locale } = useParams<{ locale: string }>()
-  const message =
-    code === 'capacity_active'
-      ? t('gate_capacity_active')
-      : code === 'capacity_monthly'
-        ? t('gate_capacity_monthly')
-        : t('gate_capacity_active')
+  const [openCoach, setOpenCoach] = useState(false)
+
+  if (openCoach) {
+    return (
+      <CoachInquiryDrawer
+        source="capacity_gate"
+        onClose={() => {
+          setOpenCoach(false)
+          onClose()
+        }}
+      />
+    )
+  }
 
   return (
     <div
@@ -23,18 +36,17 @@ export function CapacityGate({ code, onClose }: { code: string; onClose: () => v
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-bold">{t('gate_title')}</h3>
-        <p className="mt-2 text-sm text-neutral-700">{message}</p>
+        <p className="mt-2 text-sm text-neutral-700">{t(MSG_KEY[code] ?? 'gate_capacity_active')}</p>
         <div className="mt-4 flex justify-end gap-2">
           <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-neutral-100">
             {t('gate_close')}
           </button>
-          <Link
-            href={`/${locale}/coach`}
-            onClick={onClose}
-            className="flex h-10 items-center border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800"
+          <button
+            onClick={() => setOpenCoach(true)}
+            className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800"
           >
             {t('gate_find_coach')}
-          </Link>
+          </button>
         </div>
       </div>
     </div>

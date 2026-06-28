@@ -64,6 +64,8 @@
     "gate_title": "Heads up",
     "gate_capacity_active": "You already have 20 active opportunities; archive some to continue.",
     "gate_capacity_monthly": "You've hit the 30-day creation limit. Want a Coach to help you focus?",
+    "gate_capacity_resources": "Resource limit reached.",
+    "gate_capacity_collections": "Collection limit reached.",
     "gate_close": "Close",
     "gate_find_coach": "Find a Coach"
   },
