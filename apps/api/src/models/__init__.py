@@ -12,6 +12,7 @@ from src.models.resource_collection_link import ResourceCollectionLink
 from src.models.resource_item import ResourceItem, ResourceType
 from src.models.resume_branch import ResumeBranch
 from src.models.user import PersonaType, User
+from src.models.weekly_digest import WeeklyDigest
 
 __all__ = [
     "AICallLog",
@@ -34,4 +35,5 @@ __all__ = [
     "ResourceType",
     "ResumeBranch",
     "User",
+    "WeeklyDigest",
 ]
