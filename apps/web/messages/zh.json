@@ -1,0 +1,35 @@
+{
+  "home": {
+    "title": "求职作战中心",
+    "tagline": "每份投递都值得一份专属简历"
+  },
+  "nav": {
+    "opportunities": "我的求职机会",
+    "master_resume": "我的主简历",
+    "resources": "我的资源库",
+    "weekly": "本周复盘",
+    "coach": "找 Coach 锐评"
+  },
+  "auth": {
+    "login": "登录",
+    "email_label": "邮箱",
+    "send_magic_link": "发送登录链接",
+    "wechat_scan": "微信扫码登录",
+    "link_sent": "已发送，请查收邮箱",
+    "send_failed": "发送失败，请稍后重试",
+    "verifying": "验证中…",
+    "missing_token": "缺少登录令牌"
+  },
+  "onboarding": {
+    "question": "你的求职阶段是？",
+    "fresh_grad": "应届校招",
+    "job_hopper": "社招跳槽",
+    "career_changer": "跨行业转行",
+    "continue": "继续"
+  },
+  "common": {
+    "module_wip": "模块开发中，详见对应 Plan。",
+    "disguise": "伪装",
+    "loading": "加载中…"
+  }
+}

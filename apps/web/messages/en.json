@@ -1,0 +1,35 @@
+{
+  "home": {
+    "title": "Job Companion",
+    "tagline": "Every application deserves a custom resume"
+  },
+  "nav": {
+    "opportunities": "My Opportunities",
+    "master_resume": "Master Resume",
+    "resources": "Resource Hub",
+    "weekly": "Weekly Recap",
+    "coach": "Find a Coach"
+  },
+  "auth": {
+    "login": "Sign In",
+    "email_label": "Email",
+    "send_magic_link": "Send Magic Link",
+    "wechat_scan": "Scan WeChat to Sign In",
+    "link_sent": "Sent — please check your inbox",
+    "send_failed": "Failed to send, try again later",
+    "verifying": "Verifying…",
+    "missing_token": "Missing sign-in token"
+  },
+  "onboarding": {
+    "question": "What stage are you at?",
+    "fresh_grad": "Fresh Grad",
+    "job_hopper": "Job Hopper",
+    "career_changer": "Career Changer",
+    "continue": "Continue"
+  },
+  "common": {
+    "module_wip": "Module in progress — see the matching plan.",
+    "disguise": "Disguise",
+    "loading": "Loading…"
+  }
+}
