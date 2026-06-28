@@ -67,6 +67,23 @@
     "gate_close": "Close",
     "gate_find_coach": "Find a Coach"
   },
+  "investments": {
+    "title": "Applications",
+    "new": "New action",
+    "action_submitted": "Submitted",
+    "action_viewed": "Viewed",
+    "action_interview_scheduled": "Interview scheduled",
+    "action_offer_received": "Offer received",
+    "action_rejected": "Rejected",
+    "channel": "Channel",
+    "notes": "Notes",
+    "used_branch": "Resume used",
+    "channel_options": "Boss,Lagou,Liepin,LinkedIn,Company site,Referral,Other",
+    "empty": "No actions yet — add your first application record",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete_confirm": "Delete this record?"
+  },
   "resources": {
     "title": "Resource Hub",
     "new_resource": "New resource",

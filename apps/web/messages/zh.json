@@ -67,6 +67,23 @@
     "gate_close": "关闭",
     "gate_find_coach": "找 Coach"
   },
+  "investments": {
+    "title": "投递记录",
+    "new": "新增动作",
+    "action_submitted": "已投递",
+    "action_viewed": "已读取",
+    "action_interview_scheduled": "已约面",
+    "action_offer_received": "已收 Offer",
+    "action_rejected": "已拒",
+    "channel": "渠道",
+    "notes": "备注",
+    "used_branch": "使用简历",
+    "channel_options": "Boss直聘,拉勾,猎聘,LinkedIn,官网,内推,其他",
+    "empty": "暂无动作，点击新增记录你的第一次投递",
+    "save": "保存",
+    "cancel": "取消",
+    "delete_confirm": "删除这条记录？"
+  },
   "resources": {
     "title": "我的资源库",
     "new_resource": "新资源",
