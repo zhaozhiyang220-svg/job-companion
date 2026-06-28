@@ -2,7 +2,9 @@
 import { useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Upload } from 'lucide-react'
+import { Events } from '@jc/shared-types'
 import { useParseResume, useUploadInit } from '@/hooks/useMasterResume'
+import { track } from '@/lib/posthog'
 
 type Stage = 'idle' | 'uploading' | 'parsing' | 'error'
 
@@ -19,6 +21,7 @@ export function UploadDropzone({ onParsed }: { onParsed: () => void }) {
     setErr(null)
     setStage('uploading')
     setProgress(0)
+    track(Events.MASTER_RESUME_UPLOAD_STARTED)
     try {
       const { upload_url, s3_key } = await init.mutateAsync({
         filename: file.name,

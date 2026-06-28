@@ -1,6 +1,8 @@
 'use client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Events } from '@jc/shared-types'
 import { api } from '@/lib/api'
+import { track } from '@/lib/posthog'
 
 export function useIntakeStart() {
   return useMutation({
@@ -9,6 +11,7 @@ export function useIntakeStart() {
         '/api/v1/master-resume/intake/start',
         { method: 'POST' },
       ),
+    onSuccess: () => track(Events.INTAKE_STARTED),
   })
 }
 
@@ -30,6 +33,9 @@ export function useIntakeFinalize() {
         method: 'POST',
         body: JSON.stringify(vars),
       }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['master-resume'] }),
+    onSuccess: () => {
+      track(Events.INTAKE_FINALIZED)
+      qc.invalidateQueries({ queryKey: ['master-resume'] })
+    },
   })
 }

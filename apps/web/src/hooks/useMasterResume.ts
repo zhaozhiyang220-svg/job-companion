@@ -1,6 +1,8 @@
 'use client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Events } from '@jc/shared-types'
 import { api } from '@/lib/api'
+import { track } from '@/lib/posthog'
 
 type CardType = 'ability' | 'project' | 'experience'
 
@@ -26,7 +28,10 @@ export function useParseResume() {
   return useMutation({
     mutationFn: (vars: { s3_key: string }) =>
       api('/api/v1/master-resume/parse', { method: 'POST', body: JSON.stringify(vars) }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['master-resume'] }),
+    onSuccess: () => {
+      track(Events.MASTER_RESUME_PARSED)
+      qc.invalidateQueries({ queryKey: ['master-resume'] })
+    },
   })
 }
 
@@ -34,7 +39,10 @@ export function useDiagnose() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: () => api('/api/v1/master-resume/diagnose', { method: 'POST' }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['master-resume'] }),
+    onSuccess: () => {
+      track(Events.MASTER_RESUME_DIAGNOSED)
+      qc.invalidateQueries({ queryKey: ['master-resume'] })
+    },
   })
 }
 

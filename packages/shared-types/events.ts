@@ -6,6 +6,11 @@ export const Events = {
   DISGUISE_TOGGLED: 'disguise_toggled',
   LOCALE_SWITCHED: 'locale_switched',
   AI_HEALTH_CHECKED: 'ai_health_checked',
+  MASTER_RESUME_UPLOAD_STARTED: 'master_resume_upload_started',
+  MASTER_RESUME_PARSED: 'master_resume_parsed',
+  MASTER_RESUME_DIAGNOSED: 'master_resume_diagnosed',
+  INTAKE_STARTED: 'intake_started',
+  INTAKE_FINALIZED: 'intake_finalized',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]
