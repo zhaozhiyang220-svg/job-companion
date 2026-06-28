@@ -1,6 +1,7 @@
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from src.core.db import get_db
@@ -16,6 +17,8 @@ from src.schemas.master_resume import (
     UploadInitIn,
     UploadInitOut,
 )
+from src.schemas.resume import ParsedResume
+from src.services import intake as intake_svc
 from src.services.quality_diagnoser import diagnose as diagnose_svc
 from src.services.resume_parser import parse_resume_text
 from src.services.storage import download_bytes, presign_put
@@ -54,14 +57,10 @@ def upload_init(body: UploadInitIn, user: User = Depends(current_user)) -> Uploa
     return UploadInitOut(upload_url=url, s3_key=key)
 
 
-@router.post("/parse", response_model=MasterResumeOut)
-async def parse(
-    body: ParseIn, user: User = Depends(current_user), db: Session = Depends(get_db)
-) -> MasterResumeOut:
-    blob = download_bytes(body.s3_key)
-    text = extract_text(body.s3_key.split("/")[-1], blob)
-    parsed = await parse_resume_text(text, user.persona_type, user.id)
-
+def _save_parsed(
+    db: Session, user: User, parsed: ParsedResume, source_key: str | None = None
+) -> MasterResume:
+    """把解析结果落到该用户的主简历（每用户唯一），覆盖旧卡片。"""
     r = db.query(MasterResume).filter(MasterResume.user_id == user.id).first()
     if r is None:
         r = MasterResume(user_id=user.id)
@@ -73,7 +72,8 @@ async def parse(
         db.flush()
 
     r.basic_info = parsed.basic_info
-    r.parsed_from_file_url = body.s3_key
+    if source_key is not None:
+        r.parsed_from_file_url = source_key
     for a in parsed.ability_cards:
         r.ability_cards.append(AbilityCard(**a.model_dump()))
     for p in parsed.project_cards:
@@ -86,6 +86,17 @@ async def parse(
         )
     db.commit()
     db.refresh(r)
+    return r
+
+
+@router.post("/parse", response_model=MasterResumeOut)
+async def parse(
+    body: ParseIn, user: User = Depends(current_user), db: Session = Depends(get_db)
+) -> MasterResumeOut:
+    blob = download_bytes(body.s3_key)
+    text = extract_text(body.s3_key.split("/")[-1], blob)
+    parsed = await parse_resume_text(text, user.persona_type, user.id)
+    r = _save_parsed(db, user, parsed, source_key=body.s3_key)
     return _serialize(r)
 
 
@@ -190,3 +201,41 @@ async def diagnose(
 ) -> dict[str, object]:
     r = _get_resume(user, db)
     return await diagnose_svc(db, r.id, user.id)
+
+
+class IntakeStartOut(BaseModel):
+    session_id: str
+    first_question: str
+
+
+class IntakeAnswerIn(BaseModel):
+    session_id: str
+    answer: str
+
+
+class IntakeFinalizeIn(BaseModel):
+    session_id: str
+
+
+@router.post("/intake/start", response_model=IntakeStartOut)
+def intake_start(
+    user: User = Depends(current_user), db: Session = Depends(get_db)
+) -> IntakeStartOut:
+    sid, q = intake_svc.start(db, user.id)
+    return IntakeStartOut(session_id=str(sid), first_question=q)
+
+
+@router.post("/intake/answer")
+async def intake_answer(
+    body: IntakeAnswerIn, user: User = Depends(current_user), db: Session = Depends(get_db)
+) -> dict[str, object]:
+    return await intake_svc.answer(db, UUID(body.session_id), user.id, body.answer)
+
+
+@router.post("/intake/finalize", response_model=MasterResumeOut)
+async def intake_finalize(
+    body: IntakeFinalizeIn, user: User = Depends(current_user), db: Session = Depends(get_db)
+) -> MasterResumeOut:
+    parsed = await intake_svc.finalize(db, UUID(body.session_id), user.id)
+    r = _save_parsed(db, user, parsed)
+    return _serialize(r)
