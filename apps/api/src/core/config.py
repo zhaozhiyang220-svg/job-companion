@@ -36,6 +36,12 @@ class Settings(BaseSettings):
     posthog_api_key: str = ""
     posthog_host: str = "https://us.i.posthog.com"
 
+    s3_bucket: str = ""
+    s3_region: str = "us-east-1"
+    s3_endpoint_url: str | None = None
+    s3_access_key_id: str = ""
+    s3_secret_access_key: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:
