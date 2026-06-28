@@ -15,6 +15,7 @@ from src.routers import (  # noqa: E402
     health,
     master_resume,
     me,
+    resource,
     resume_branch,
 )
 
@@ -25,3 +26,4 @@ app.include_router(me.router)
 app.include_router(master_resume.router)
 app.include_router(application.router)
 app.include_router(resume_branch.router)
+app.include_router(resource.router)
