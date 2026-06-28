@@ -9,10 +9,11 @@ if _dsn:
 
 from fastapi import FastAPI  # noqa: E402
 
-from src.routers import auth, health, master_resume, me  # noqa: E402
+from src.routers import application, auth, health, master_resume, me  # noqa: E402
 
 app = FastAPI(title="Job Companion API", version="0.0.0")
 app.include_router(health.router)
 app.include_router(auth.router)
 app.include_router(me.router)
 app.include_router(master_resume.router)
+app.include_router(application.router)
