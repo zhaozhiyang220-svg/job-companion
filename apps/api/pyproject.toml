@@ -27,6 +27,7 @@ dev = [
   "pytest-cov>=5.0.0",
   "ruff>=0.7.1",
   "mypy>=1.13.0",
+  "types-python-jose>=3.3",
 ]
 
 [tool.setuptools]
