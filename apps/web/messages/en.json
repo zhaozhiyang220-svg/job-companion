@@ -67,6 +67,19 @@
     "gate_close": "Close",
     "gate_find_coach": "Find a Coach"
   },
+  "weekly": {
+    "title": "Weekly Recap",
+    "refresh": "Recompute",
+    "refreshing": "Recomputing…",
+    "stat_new_applications": "New opportunities",
+    "stat_new_branches": "Custom versions",
+    "stat_exports": "PDF exports",
+    "stat_coach_inquiries": "Coach inquiries",
+    "stat_total_active": "Active opportunities",
+    "observation": "AI weekly observation",
+    "actions": "Suggested next steps",
+    "this_week": "This week"
+  },
   "investments": {
     "title": "Applications",
     "new": "New action",

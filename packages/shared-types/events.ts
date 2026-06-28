@@ -25,6 +25,9 @@ export const Events = {
   RESOURCE_LINKED_TO_APP: 'resource_linked_to_app',
   INVESTMENT_CREATED: 'investment_created',
   INVESTMENT_DELETED: 'investment_deleted',
+  WEEKLY_OPENED: 'weekly_opened',
+  WEEKLY_REFRESHED: 'weekly_refreshed',
+  WEEKLY_ACTION_CLICKED: 'weekly_action_clicked',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]

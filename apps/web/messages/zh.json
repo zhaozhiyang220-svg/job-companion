@@ -67,6 +67,19 @@
     "gate_close": "关闭",
     "gate_find_coach": "找 Coach"
   },
+  "weekly": {
+    "title": "本周复盘",
+    "refresh": "重算",
+    "refreshing": "重算中…",
+    "stat_new_applications": "新增机会",
+    "stat_new_branches": "定制版本",
+    "stat_exports": "导出 PDF",
+    "stat_coach_inquiries": "Coach 咨询",
+    "stat_total_active": "进行中机会",
+    "observation": "AI 本周观察",
+    "actions": "建议下一步",
+    "this_week": "本周"
+  },
   "investments": {
     "title": "投递记录",
     "new": "新增动作",
