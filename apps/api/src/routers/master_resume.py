@@ -16,6 +16,7 @@ from src.schemas.master_resume import (
     UploadInitIn,
     UploadInitOut,
 )
+from src.services.quality_diagnoser import diagnose as diagnose_svc
 from src.services.resume_parser import parse_resume_text
 from src.services.storage import download_bytes, presign_put
 from src.services.text_extractor import extract_text
@@ -181,3 +182,11 @@ def delete_card(
         raise HTTPException(status_code=404, detail="card not found")
     db.delete(obj)
     db.commit()
+
+
+@router.post("/diagnose")
+async def diagnose(
+    user: User = Depends(current_user), db: Session = Depends(get_db)
+) -> dict[str, object]:
+    r = _get_resume(user, db)
+    return await diagnose_svc(db, r.id, user.id)
