@@ -3,6 +3,7 @@ from src.models.application import Application, ApplicationStatus
 from src.models.application_resource_link import ApplicationResourceLink
 from src.models.cards import AbilityCard, ExperienceCard, ProjectCard
 from src.models.intake_session import IntakeSession
+from src.models.investment import Investment, InvestmentActionType
 from src.models.job_posting import JobPosting
 from src.models.magic_link_token import MagicLinkToken
 from src.models.master_resume import MasterResume
@@ -20,6 +21,8 @@ __all__ = [
     "ApplicationStatus",
     "ExperienceCard",
     "IntakeSession",
+    "Investment",
+    "InvestmentActionType",
     "JobPosting",
     "MagicLinkToken",
     "MasterResume",
