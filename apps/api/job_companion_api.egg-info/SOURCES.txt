@@ -1,0 +1,7 @@
+pyproject.toml
+job_companion_api.egg-info/PKG-INFO
+job_companion_api.egg-info/SOURCES.txt
+job_companion_api.egg-info/dependency_links.txt
+job_companion_api.egg-info/requires.txt
+job_companion_api.egg-info/top_level.txt
+src/__init__.py

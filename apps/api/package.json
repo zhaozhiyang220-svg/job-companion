@@ -1,0 +1,10 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": ".venv\\Scripts\\python -m uvicorn src.main:app --reload --port 8000 --app-dir .",
+    "test": ".venv\\Scripts\\python -m pytest -q",
+    "typecheck": ".venv\\Scripts\\python -m mypy src",
+    "lint": ".venv\\Scripts\\python -m ruff check src tests"
+  }
+}
