@@ -20,8 +20,8 @@ def build_qr_url() -> tuple[str, str]:
 
 async def exchange_code_for_openid(code: str) -> str:
     s = get_settings()
-    # dev 模式提供 mock 路径（本地无法对接微信开放平台公网回调）
-    if s.app_env == "development" and code.startswith("DEV-"):
+    # 非生产环境提供 mock 路径（本地/CI 无法对接微信开放平台公网回调）
+    if s.app_env in ("development", "test") and code.startswith("DEV-"):
         return f"openid-dev-{code[4:]}"
     url = "https://api.weixin.qq.com/sns/oauth2/access_token"
     async with httpx.AsyncClient() as client:
