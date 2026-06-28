@@ -1,6 +1,8 @@
 'use client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Events } from '@jc/shared-types'
 import { api } from '@/lib/api'
+import { track } from '@/lib/posthog'
 
 export type ApplicationStatus = 'drafting' | 'archived'
 
@@ -71,7 +73,10 @@ export function useCreateApplication() {
         method: 'POST',
         body: JSON.stringify(body),
       }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['applications'] }),
+    onSuccess: (data) => {
+      track(Events.OPPORTUNITY_CREATED, { id: data.id })
+      qc.invalidateQueries({ queryKey: ['applications'] })
+    },
   })
 }
 
@@ -80,7 +85,8 @@ export function useUpdateApplication(id: string) {
   return useMutation({
     mutationFn: (body: { status?: string; priority?: number; notes?: string }) =>
       api(`/api/v1/applications/${id}`, { method: 'PATCH', body: JSON.stringify(body) }),
-    onSuccess: () => {
+    onSuccess: (_data, vars) => {
+      if (vars.status === 'archived') track(Events.OPPORTUNITY_ARCHIVED, { id })
       qc.invalidateQueries({ queryKey: ['applications'] })
       qc.invalidateQueries({ queryKey: ['application', id] })
     },
