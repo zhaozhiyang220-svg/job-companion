@@ -19,6 +19,10 @@ export const Events = {
   RESUME_BRANCH_ROLLBACK: 'resume_branch_rollback',
   RESUME_MODE_SWITCHED: 'resume_mode_switched',
   COACH_INQUIRY_OPENED: 'coach_inquiry_opened',
+  RESOURCE_CREATED: 'resource_created',
+  RESOURCE_DELETED: 'resource_deleted',
+  COLLECTION_CREATED: 'collection_created',
+  RESOURCE_LINKED_TO_APP: 'resource_linked_to_app',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]
