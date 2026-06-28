@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from src.core.db import get_db
@@ -94,3 +94,90 @@ def get_mine(
 ) -> MasterResumeOut | None:
     r = db.query(MasterResume).filter(MasterResume.user_id == user.id).first()
     return _serialize(r) if r else None
+
+
+_CARD_MODELS: dict[str, type[AbilityCard] | type[ProjectCard] | type[ExperienceCard]] = {
+    "ability": AbilityCard,
+    "project": ProjectCard,
+    "experience": ExperienceCard,
+}
+
+
+def _resolve_model(
+    card_type: str,
+) -> type[AbilityCard] | type[ProjectCard] | type[ExperienceCard]:
+    model = _CARD_MODELS.get(card_type)
+    if model is None:
+        raise HTTPException(status_code=400, detail="invalid card type")
+    return model
+
+
+def _get_resume(user: User, db: Session) -> MasterResume:
+    r = db.query(MasterResume).filter(MasterResume.user_id == user.id).first()
+    if not r:
+        raise HTTPException(status_code=404, detail="master resume not found; upload first")
+    return r
+
+
+@router.post("/cards/{card_type}", status_code=status.HTTP_201_CREATED)
+def create_card(
+    card_type: str,
+    body: dict[str, object],
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+) -> dict[str, str]:
+    model = _resolve_model(card_type)
+    r = _get_resume(user, db)
+    if card_type == "experience" and "company" in body:
+        body["company_encrypted"] = encrypt_field(str(body.pop("company")))
+    obj = model(master_resume_id=r.id, **body)
+    db.add(obj)
+    db.commit()
+    db.refresh(obj)
+    return {"id": str(obj.id)}
+
+
+@router.patch("/cards/{card_type}/{card_id}")
+def update_card(
+    card_type: str,
+    card_id: str,
+    body: dict[str, object],
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+) -> dict[str, bool]:
+    model = _resolve_model(card_type)
+    r = _get_resume(user, db)
+    obj = (
+        db.query(model)
+        .filter(model.id == card_id, model.master_resume_id == r.id)
+        .first()
+    )
+    if not obj:
+        raise HTTPException(status_code=404, detail="card not found")
+    if card_type == "experience" and "company" in body:
+        body["company_encrypted"] = encrypt_field(str(body.pop("company")))
+    for k, v in body.items():
+        if hasattr(obj, k):
+            setattr(obj, k, v)
+    db.commit()
+    return {"ok": True}
+
+
+@router.delete("/cards/{card_type}/{card_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_card(
+    card_type: str,
+    card_id: str,
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+) -> None:
+    model = _resolve_model(card_type)
+    r = _get_resume(user, db)
+    obj = (
+        db.query(model)
+        .filter(model.id == card_id, model.master_resume_id == r.id)
+        .first()
+    )
+    if not obj:
+        raise HTTPException(status_code=404, detail="card not found")
+    db.delete(obj)
+    db.commit()
