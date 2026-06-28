@@ -16,6 +16,7 @@ from src.jobs.scheduler import shutdown_scheduler, start_scheduler  # noqa: E402
 from src.routers import (  # noqa: E402
     application,
     auth,
+    coach,
     health,
     investment,
     master_resume,
@@ -43,3 +44,4 @@ app.include_router(resume_branch.router)
 app.include_router(resource.router)
 app.include_router(investment.router)
 app.include_router(weekly.router)
+app.include_router(coach.router)
