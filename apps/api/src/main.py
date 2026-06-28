@@ -18,6 +18,7 @@ from src.routers import (  # noqa: E402
     auth,
     coach,
     health,
+    internal_dashboard,
     investment,
     master_resume,
     me,
@@ -45,3 +46,4 @@ app.include_router(resource.router)
 app.include_router(investment.router)
 app.include_router(weekly.router)
 app.include_router(coach.router)
+app.include_router(internal_dashboard.router)
