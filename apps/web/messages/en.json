@@ -67,6 +67,20 @@
     "gate_close": "Close",
     "gate_find_coach": "Find a Coach"
   },
+  "coach": {
+    "title": "Find a Coach",
+    "intro": "A 1:1 human coach reviews your resume from a recruiter's view, 30-60 min.",
+    "price": "¥500-2000 / session",
+    "slots_open": "{n} slots left this week",
+    "slots_full": "Full this week — resets Monday morning",
+    "contact_label": "Contact (WeChat / phone / email)",
+    "notes_label": "What you want reviewed (optional)",
+    "submit": "Submit request",
+    "submitting": "Submitting…",
+    "submitted": "Submitted — a coach will reach you within 24h",
+    "subscribe_next_week": "Leave your email to be notified when slots reopen",
+    "close": "Close"
+  },
   "weekly": {
     "title": "Weekly Recap",
     "refresh": "Recompute",

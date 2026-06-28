@@ -1,27 +1,100 @@
 'use client'
+import { useState } from 'react'
+import { Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useCoachAvailability, useCreateInquiry } from '@/hooks/useCoach'
 
-export function CoachInquiryDrawer({ onClose }: { onClose: () => void }) {
-  const t = useTranslations('resume_tab')
-  // v1 极简：展示说明 + 微信号；Plan 7 接 /api/v1/coach/inquiries 表单
+export function CoachInquiryDrawer({
+  appId,
+  onClose,
+  source = 'resume_workspace',
+}: {
+  appId?: string
+  branchId?: string
+  onClose: () => void
+  source?: string
+}) {
+  const t = useTranslations('coach')
+  const { data: av } = useCoachAvailability()
+  const create = useCreateInquiry()
+  const [contact, setContact] = useState('')
+  const [notes, setNotes] = useState('')
+  const [done, setDone] = useState(false)
+
+  async function submit() {
+    await create.mutateAsync({
+      application_id: appId,
+      source_screen: source,
+      contact_method: contact,
+      notes,
+    })
+    setDone(true)
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="w-96 border border-black bg-white p-6 shadow-md"
+        className="w-full max-w-md space-y-3 border border-black bg-white p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="font-bold">{t('coach_title')}</h3>
-        <p className="mt-2 text-sm">{t('coach_desc')}</p>
-        <p className="mt-1 text-xs text-neutral-500">{t('coach_slots')}</p>
-        <div className="mt-4 text-sm">{t('coach_contact')}</div>
+        <h3 className="font-bold">{t('title')}</h3>
+        <p className="text-sm">
+          {t('intro')} · <b>{t('price')}</b>
+        </p>
+        {av &&
+          (av.available ? (
+            <p className="text-xs text-green-600">
+              {t('slots_open', { n: av.slots_total - av.slots_taken })}
+            </p>
+          ) : (
+            <p className="text-xs text-red-600">{t('slots_full')}</p>
+          ))}
+        {!done && av?.available && (
+          <>
+            <input
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              placeholder={t('contact_label')}
+              className="w-full border border-black px-3 py-2"
+            />
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder={t('notes_label')}
+              rows={3}
+              className="w-full border border-neutral-300 px-3 py-2"
+            />
+            <button
+              onClick={submit}
+              disabled={!contact || create.isPending}
+              className="h-10 w-full border border-black bg-black text-white hover:bg-neutral-800 disabled:opacity-40"
+            >
+              {create.isPending ? t('submitting') : t('submit')}
+            </button>
+          </>
+        )}
+        {done && (
+          <div className="flex items-center gap-2 text-green-600">
+            <Check className="h-4 w-4" aria-hidden="true" />
+            {t('submitted')}
+          </div>
+        )}
+        {!av?.available && (
+          <a
+            href="mailto:notify@example.com?subject=订阅Coach名额"
+            className="block text-center text-sm underline"
+          >
+            {t('subscribe_next_week')}
+          </a>
+        )}
         <button
           onClick={onClose}
-          className="mt-4 h-10 w-full border border-black bg-black text-white hover:bg-neutral-800"
+          className="h-10 w-full border border-neutral-300 hover:bg-neutral-100"
         >
-          {t('coach_close')}
+          {t('close')}
         </button>
       </div>
     </div>

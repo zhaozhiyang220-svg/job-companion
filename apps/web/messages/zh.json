@@ -67,6 +67,20 @@
     "gate_close": "关闭",
     "gate_find_coach": "找 Coach"
   },
+  "coach": {
+    "title": "找 Coach 锐评",
+    "intro": "1 对 1 真人 coach 给你简历做招聘方视角深度锐评，30-60 分钟。",
+    "price": "¥500-2000 / 次",
+    "slots_open": "本周还剩 {n} 个名额",
+    "slots_full": "本周名额已满，下周一早重置",
+    "contact_label": "联系方式（微信号 / 手机 / 邮箱）",
+    "notes_label": "想被锐评的环节（可选）",
+    "submit": "提交申请",
+    "submitting": "提交中…",
+    "submitted": "已提交，Coach 24h 内联系你",
+    "subscribe_next_week": "留下邮箱，下周名额开放时通知我",
+    "close": "关闭"
+  },
   "weekly": {
     "title": "本周复盘",
     "refresh": "重算",

@@ -28,6 +28,8 @@ export const Events = {
   WEEKLY_OPENED: 'weekly_opened',
   WEEKLY_REFRESHED: 'weekly_refreshed',
   WEEKLY_ACTION_CLICKED: 'weekly_action_clicked',
+  COACH_INQUIRY_SUBMITTED: 'coach_inquiry_submitted',
+  COACH_AVAILABILITY_VIEWED: 'coach_availability_viewed',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]

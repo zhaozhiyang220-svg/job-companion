@@ -27,7 +27,14 @@ export function CoachInquiryButton({
         <MessageSquareQuote className="h-4 w-4" aria-hidden="true" />
         {t('coach_btn')}
       </button>
-      {open && <CoachInquiryDrawer onClose={() => setOpen(false)} />}
+      {open && (
+        <CoachInquiryDrawer
+          appId={appId}
+          branchId={branchId}
+          source="resume_workspace"
+          onClose={() => setOpen(false)}
+        />
+      )}
     </>
   )
 }
