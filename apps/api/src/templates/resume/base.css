@@ -1,0 +1,13 @@
+@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans CJK SC","Noto Sans","Helvetica","Inter","Arial",sans-serif; font-size: 10.5pt; color: #222; line-height: 1.45; }
+h1 { font-size: 18pt; margin: 0 0 4mm; }
+h2 { font-size: 12pt; margin: 6mm 0 2mm; border-bottom: 1px solid #999; padding-bottom: 1mm; }
+.basic { color: #555; font-size: 9.5pt; margin-bottom: 4mm; }
+.card { margin-bottom: 4mm; }
+.card.em-high { background: #fff5d6; padding: 2mm; border-left: 3px solid #f0a500; }
+.card.em-medium { background: #fff9e8; padding: 1mm; }
+.title { font-weight: bold; }
+.meta { color: #777; font-size: 9.5pt; }
+.kw { display: inline-block; background: #e6f4ff; color: #006fcc; padding: 0.5mm 2mm; margin-right: 2mm; border-radius: 2mm; font-size: 9pt; }
+ul { margin: 1mm 0 0 4mm; padding: 0; }
+li { margin-bottom: 1mm; }

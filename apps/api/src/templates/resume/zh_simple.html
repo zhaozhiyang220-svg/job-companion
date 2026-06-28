@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><style>{{ css }}</style></head>
+<body>
+  <h1>{{ basic.name or "" }}</h1>
+  <div class="basic">
+    {% if basic.phone %}{{ basic.phone }} · {% endif %}
+    {% if basic.email %}{{ basic.email }} · {% endif %}
+    {{ basic.location or "" }}
+  </div>
+
+  {% if experiences %}<h2>工作经历</h2>
+  {% for e in experiences %}
+    <div class="card em-{{ e._emphasized or 'none' }}">
+      <div class="title">{{ e.company_display }} — {{ e.title }}</div>
+      <div class="meta">{{ e.period }} · {{ e.industry or "" }}</div>
+      {% if e.scope %}<div>{{ e.scope }}</div>{% endif %}
+      {% if e.achievements %}<ul>{% for a in e.achievements %}<li>{{ a }}</li>{% endfor %}</ul>{% endif %}
+      {% if e._inserted_keywords %}<div>{% for k in e._inserted_keywords %}<span class="kw">{{ k }}</span>{% endfor %}</div>{% endif %}
+    </div>
+  {% endfor %}{% endif %}
+
+  {% if projects %}<h2>项目经历</h2>
+  {% for p in projects %}
+    <div class="card em-{{ p._emphasized or 'none' }}">
+      <div class="title">{{ p.project_name }} {% if p.role %}· {{ p.role }}{% endif %}</div>
+      <div class="meta">{{ p.period }}</div>
+      <ul>
+        {% if p.star.situation %}<li><b>背景：</b>{{ p.star.situation }}</li>{% endif %}
+        {% if p.star.task %}<li><b>目标：</b>{{ p.star.task }}</li>{% endif %}
+        {% if p.star.action %}<li><b>行动：</b>{{ p.star.action }}</li>{% endif %}
+        {% if p.star.result %}<li><b>结果：</b>{{ p.star.result }}</li>{% endif %}
+      </ul>
+      {% if p.tech_stack %}<div class="meta">技术：{{ p.tech_stack | join(", ") }}</div>{% endif %}
+      {% if p._inserted_keywords %}<div>{% for k in p._inserted_keywords %}<span class="kw">{{ k }}</span>{% endfor %}</div>{% endif %}
+    </div>
+  {% endfor %}{% endif %}
+
+  {% if abilities %}<h2>核心能力</h2>
+  <div>
+    {% for a in abilities %}
+      <span class="kw">{{ a.skill_name }}{% if a.level %} · Lv{{ a.level }}{% endif %}</span>
+    {% endfor %}
+  </div>{% endif %}
+</body></html>
