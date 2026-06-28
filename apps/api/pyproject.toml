@@ -23,6 +23,7 @@ dependencies = [
   "python-docx>=1.1.2",
   "jinja2>=3.1.4",
   "weasyprint>=62.3",
+  "apscheduler>=3.10.4",
 ]
 
 [project.optional-dependencies]
@@ -57,7 +58,7 @@ mypy_path = "src"
 
 [[tool.mypy.overrides]]
 # 这些第三方库没有类型存根
-module = ["pypdfium2.*", "docx.*", "weasyprint.*"]
+module = ["pypdfium2.*", "docx.*", "weasyprint.*", "apscheduler.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
