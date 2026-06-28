@@ -14,6 +14,11 @@ export const Events = {
   OPPORTUNITY_CREATED: 'opportunity_created',
   OPPORTUNITY_OPENED: 'opportunity_opened',
   OPPORTUNITY_ARCHIVED: 'opportunity_archived',
+  RESUME_BRANCH_GENERATED: 'resume_branch_generated',
+  RESUME_BRANCH_EXPORTED: 'resume_branch_exported',
+  RESUME_BRANCH_ROLLBACK: 'resume_branch_rollback',
+  RESUME_MODE_SWITCHED: 'resume_mode_switched',
+  COACH_INQUIRY_OPENED: 'coach_inquiry_opened',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]
