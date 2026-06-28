@@ -8,7 +8,7 @@ from src.core.config import get_settings
 from src.core.db import Base
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session", autouse=True)
 def engine() -> Iterator[Engine]:
     e = create_engine(get_settings().database_url, future=True)
     Base.metadata.create_all(e)
