@@ -23,6 +23,8 @@ export const Events = {
   RESOURCE_DELETED: 'resource_deleted',
   COLLECTION_CREATED: 'collection_created',
   RESOURCE_LINKED_TO_APP: 'resource_linked_to_app',
+  INVESTMENT_CREATED: 'investment_created',
+  INVESTMENT_DELETED: 'investment_deleted',
 } as const
 
 export type EventName = (typeof Events)[keyof typeof Events]
