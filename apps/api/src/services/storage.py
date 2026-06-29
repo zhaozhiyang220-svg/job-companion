@@ -13,7 +13,9 @@ def _client() -> S3Client:
         endpoint_url=s.s3_endpoint_url or None,
         aws_access_key_id=s.s3_access_key_id,
         aws_secret_access_key=s.s3_secret_access_key,
-        config=Config(signature_version="s3v4"),
+        # 腾讯云 COS 只接受 virtual-hosted 域名（<bucket>.cos.<region>.myqcloud.com），
+        # 拒绝 path-style；boto3 默认对自定义 endpoint 用 path-style，需显式切 virtual。
+        config=Config(signature_version="s3v4", s3={"addressing_style": "virtual"}),
     )
 
 
