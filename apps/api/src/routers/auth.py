@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Cookie, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from src.core.analytics import capture
 from src.core.config import get_settings
 from src.core.db import get_db
-from src.core.security import issue_session_token
+from src.core.security import issue_session_token, verify_session_token
 from src.models import User
 from src.schemas.auth import MagicLinkRequest, MagicLinkVerify
 from src.services.magic_link import request_link, verify_token
@@ -25,6 +25,27 @@ def _set_session_cookie(response: Response, user: User) -> None:
         samesite="lax",
         max_age=_COOKIE_MAX_AGE,
     )
+
+
+@router.post("/guest")
+def create_guest(
+    response: Response,
+    jc_session: str | None = Cookie(default=None),
+    db: Session = Depends(get_db),
+) -> dict[str, str]:
+    # 免登录访客：首次访问自动建一个匿名用户并下发 session，现有受保护接口即可使用。
+    # 幂等：已有有效会话则直接返回，避免重复创建访客。
+    if jc_session:
+        uid = verify_session_token(jc_session)
+        if uid and db.get(User, uid):
+            return {"user_id": str(uid)}
+    user = User(preferences={})
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    _set_session_cookie(response, user)
+    capture(str(user.id), "guest_session_created", {})
+    return {"user_id": str(user.id)}
 
 
 @router.post("/magic-link/request")

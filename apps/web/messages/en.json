@@ -1,7 +1,8 @@
 {
   "home": {
     "title": "Job Companion",
-    "tagline": "Every application deserves a custom resume"
+    "tagline": "Every application deserves a custom resume",
+    "start": "Get Started"
   },
   "nav": {
     "opportunities": "My Opportunities",

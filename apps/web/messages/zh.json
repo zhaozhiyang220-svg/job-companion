@@ -1,7 +1,8 @@
 {
   "home": {
     "title": "求职作战中心",
-    "tagline": "每份投递都值得一份专属简历"
+    "tagline": "每份投递都值得一份专属简历",
+    "start": "开始使用"
   },
   "nav": {
     "opportunities": "我的求职机会",
