@@ -14,7 +14,7 @@ export function RenderedResume({
   return (
     <div className="space-y-4">
       <Section title={t('section_experience')}>
-        {data.experience_cards.map((e) => (
+        {(data?.experience_cards ?? []).map((e) => (
           <Card key={e.id} emphasis={highlight ? e._emphasized : 'none'} hidden={highlight && e._hidden}>
             <div className="font-bold">
               {e.company} — {e.title}
@@ -32,7 +32,7 @@ export function RenderedResume({
         ))}
       </Section>
       <Section title={t('section_project')}>
-        {data.project_cards.map((p) => (
+        {(data?.project_cards ?? []).map((p) => (
           <Card
             key={p.id}
             emphasis={highlight ? p._emphasized : 'none'}
@@ -86,7 +86,7 @@ export function RenderedResume({
       </Section>
       <Section title={t('section_ability')}>
         <div className="flex flex-wrap gap-2">
-          {data.ability_cards.map((a) => (
+          {(data?.ability_cards ?? []).map((a) => (
             <span
               key={a.id}
               className={`border px-2 py-1 text-xs ${

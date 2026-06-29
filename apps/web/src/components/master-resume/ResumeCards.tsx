@@ -31,12 +31,12 @@ export function ResumeCards({ data }: { data: MasterResumeData }) {
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <Col title={t('ability')} onAdd={() => addA.mutate({ skill_name: t('new_ability'), level: 3 })}>
-          {data.ability_cards.map((c) => (
+          {(data.ability_cards ?? []).map((c) => (
             <AbilityCardItem key={c.id} card={c} />
           ))}
         </Col>
         <Col title={t('project')} onAdd={() => addP.mutate({ project_name: t('new_project') })}>
-          {data.project_cards.map((c) => (
+          {(data.project_cards ?? []).map((c) => (
             <ProjectCardItem key={c.id} card={c} />
           ))}
         </Col>
@@ -44,7 +44,7 @@ export function ResumeCards({ data }: { data: MasterResumeData }) {
           title={t('experience')}
           onAdd={() => addE.mutate({ company: t('new_company'), title: '', is_current: false })}
         >
-          {data.experience_cards.map((c) => (
+          {(data.experience_cards ?? []).map((c) => (
             <ExperienceCardItem key={c.id} card={c} />
           ))}
         </Col>
