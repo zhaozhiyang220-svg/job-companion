@@ -38,11 +38,16 @@ async def answer(
         model="auto-light",
         system=INTAKE_DIALOGUE_SYSTEM,
         messages=s.transcript,
-        max_tokens=512,
+        max_tokens=800,
         user_id=user_id,
         scene="intake_dialogue",
     )
-    data: dict[str, object] = json_parse.loads(raw)
+    try:
+        data: dict[str, object] = json_parse.loads(raw)
+    except ValueError:
+        # 轻量模型在多轮里偶尔返回纯文本而非 JSON：把原文当作下一个问题，
+        # 保证对话不中断（而非整条流程 500）。
+        data = {"done": False, "next_question": raw.strip()}
     if data.get("done"):
         s.transcript = [
             *s.transcript,
