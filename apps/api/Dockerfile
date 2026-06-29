@@ -8,8 +8,8 @@ RUN apt-get update \
      libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf-2.0-0 \
      libffi-dev libcairo2 fonts-noto-cjk \
   && rm -rf /var/lib/apt/lists/*
-COPY pyproject.toml .
-RUN pip install --no-cache-dir -U pip && pip install --no-cache-dir -e ".[dev]"
+# 先拷全部源码再装：editable 安装（packages=["src"]）要求 src 目录存在
 COPY . .
+RUN pip install --no-cache-dir -U pip && pip install --no-cache-dir -e ".[dev]"
 EXPOSE 8000
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--app-dir", "."]
