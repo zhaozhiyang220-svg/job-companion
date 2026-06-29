@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.parse_resume import PARSE_RESUME_SYSTEM, build_user_prompt
 from src.models import PersonaType
@@ -26,4 +27,4 @@ async def parse_resume_text(
         user_id=user_id,
         scene="resume_parse",
     )
-    return ParsedResume.model_validate_json(raw)
+    return json_parse.validate(ParsedResume, raw)

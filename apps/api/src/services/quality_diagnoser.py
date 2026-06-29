@@ -3,6 +3,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.diagnose_quality import DIAGNOSE_QUALITY_SYSTEM
 from src.core.security import decrypt_field
@@ -62,7 +63,7 @@ async def diagnose(db: Session, master_resume_id: UUID, user_id: UUID) -> dict[s
         user_id=user_id,
         scene="resume_diagnose",
     )
-    result: dict[str, object] = json.loads(raw)
+    result: dict[str, object] = json_parse.loads(raw)
 
     weak_raw = result.get("weak_cards", [])
     weak_ids: dict[tuple[str, str], list[str]] = {}

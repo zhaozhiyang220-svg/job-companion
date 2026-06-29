@@ -4,6 +4,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.intake_dialogue import (
     INTAKE_DIALOGUE_SYSTEM,
@@ -41,7 +42,7 @@ async def answer(
         user_id=user_id,
         scene="intake_dialogue",
     )
-    data: dict[str, object] = json.loads(raw)
+    data: dict[str, object] = json_parse.loads(raw)
     if data.get("done"):
         s.transcript = [
             *s.transcript,
@@ -69,4 +70,4 @@ async def finalize(db: Session, session_id: UUID, user_id: UUID) -> ParsedResume
     )
     s.finished_at = datetime.now(UTC)
     db.commit()
-    return ParsedResume.model_validate_json(raw)
+    return json_parse.validate(ParsedResume, raw)

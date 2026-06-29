@@ -1,6 +1,7 @@
 import json
 from uuid import UUID
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.score_resume import SCORE_RESUME_SYSTEM
 
@@ -21,4 +22,4 @@ async def score_branch(rendered: dict[str, object], jd: dict[str, object], user_
         user_id=user_id,
         scene="resume_score",
     )
-    return int(json.loads(raw)["score"])
+    return int(json_parse.loads(raw)["score"])

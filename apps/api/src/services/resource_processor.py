@@ -1,7 +1,7 @@
-import json
 from typing import Any
 from uuid import UUID
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.summarize_resource import SUMMARIZE_RESOURCE_SYSTEM
 from src.models.resource_item import ResourceType
@@ -20,5 +20,5 @@ async def summarize(text: str, type_: ResourceType, user_id: UUID) -> dict[str, 
         user_id=user_id,
         scene="resource_summarize",
     )
-    data: dict[str, Any] = json.loads(raw)
+    data: dict[str, Any] = json_parse.loads(raw)
     return data

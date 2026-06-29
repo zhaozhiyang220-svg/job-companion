@@ -2,6 +2,7 @@ import json
 from typing import Any
 from uuid import UUID
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.weekly_observation import WEEKLY_OBSERVATION_SYSTEM
 
@@ -20,5 +21,5 @@ async def generate_observation(
         user_id=user_id,
         scene="weekly_observation",
     )
-    data: dict[str, Any] = json.loads(raw)
+    data: dict[str, Any] = json_parse.loads(raw)
     return data

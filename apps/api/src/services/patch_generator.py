@@ -2,6 +2,7 @@ import json
 from typing import Any
 from uuid import UUID
 
+from src.ai import json_parse
 from src.ai.llm_client import LLMClient
 from src.ai.prompts.generate_patch import GENERATE_PATCH_SYSTEM
 
@@ -31,7 +32,7 @@ async def generate_patch(
         user_id=user_id,
         scene="patch_generate",
     )
-    data: dict[str, Any] = json.loads(raw)
+    data: dict[str, Any] = json_parse.loads(raw)
     if "patch" not in data or "reasoning" not in data:
         raise ValueError("invalid patch generator response")
     return data
