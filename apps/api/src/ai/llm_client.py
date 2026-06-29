@@ -1,16 +1,24 @@
+import os
 from time import perf_counter
 from uuid import UUID
 
 from litellm import acompletion
 from litellm.cost_calculator import completion_cost
 
+from src.core.config import get_settings
 from src.core.db import SessionLocal
 from src.models.ai_call_log import AICallLog
 
-# v1 用户侧统一调用 MiniMax；同家族两档兜底（M1 重活 → abab6.5s 轻活）
+# pydantic-settings 只把 .env 读进 Settings，不写 os.environ；而 LiteLLM 从
+# os.environ["DEEPSEEK_API_KEY"] 取 key，这里显式桥接（CI 已设真实 env 则不覆盖）。
+_deepseek_key = get_settings().deepseek_api_key
+if _deepseek_key:
+    os.environ.setdefault("DEEPSEEK_API_KEY", _deepseek_key)
+
+# v1 实际跑 DeepSeek：V3(deepseek-chat) 主力，R1(deepseek-reasoner) 兜底
 FALLBACK_CHAIN: dict[str, list[str]] = {
-    "auto-m1": ["minimax/MiniMax-M1", "minimax/abab6.5s-chat"],
-    "auto-light": ["minimax/abab6.5s-chat"],
+    "auto-m1": ["deepseek/deepseek-chat", "deepseek/deepseek-reasoner"],
+    "auto-light": ["deepseek/deepseek-chat"],
 }
 
 

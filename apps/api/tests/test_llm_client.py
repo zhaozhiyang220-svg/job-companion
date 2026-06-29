@@ -31,7 +31,7 @@ async def test_acomplete_falls_back_to_second_model() -> None:
     fake_response = type("R", (), {"choices": [choice]})()
 
     async def flaky(model: str, **_: object) -> object:
-        if model == "minimax/MiniMax-M1":
+        if model == "deepseek/deepseek-chat":
             raise RuntimeError("rate limited")
         return fake_response
 

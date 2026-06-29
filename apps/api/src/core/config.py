@@ -27,7 +27,10 @@ class Settings(BaseSettings):
     smtp_password: str = ""
     smtp_from: str = "noreply@example.com"
 
-    # MiniMax 是 v1 唯一 LLM 供应商
+    # v1 实际跑 DeepSeek（LiteLLM 原生支持，读 DEEPSEEK_API_KEY）
+    deepseek_api_key: str = ""
+
+    # MiniMax 为最初设计的供应商，暂保留为 legacy（未启用）
     minimax_api_key: str = ""
     minimax_group_id: str = ""
     minimax_api_base: str = "https://api.minimax.chat/v1"
