@@ -55,3 +55,24 @@ async def test_log_written_on_error() -> None:
     db.close()
     assert row is not None
     assert row.status == "error"
+
+
+@pytest.mark.asyncio
+async def test_logging_failure_does_not_break_call() -> None:
+    # 落库失败（如表缺失/连接断）时，AI 主流程仍应正常返回，而非 500。
+    message = type("M", (), {"content": "ok"})()
+    choice = type("C", (), {"message": message})()
+    fake_response = type("R", (), {"choices": [choice]})()
+    broken_session = MagicMock()
+    broken_session.commit.side_effect = RuntimeError("relation does not exist")
+    with (
+        patch("src.ai.llm_client.acompletion", AsyncMock(return_value=fake_response)),
+        patch("src.ai.llm_client.SessionLocal", return_value=broken_session),
+    ):
+        out = await LLMClient().acomplete(
+            "deepseek/deepseek-chat",
+            "sys",
+            [{"role": "user", "content": "hi"}],
+            scene="test_resilient",
+        )
+    assert out == "ok"

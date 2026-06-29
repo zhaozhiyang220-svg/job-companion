@@ -1,3 +1,4 @@
+import contextlib
 import os
 from time import perf_counter
 from uuid import UUID
@@ -64,28 +65,28 @@ class LLMClient:
         status: str,
         error: str | None,
     ) -> None:
-        cost = 0.0
-        if resp is not None:
+        # 打点是 best-effort：成本计算或落库失败都不得影响 AI 主流程返回。
+        with contextlib.suppress(Exception):
+            cost = 0.0
+            if resp is not None:
+                with contextlib.suppress(Exception):
+                    cost = float(completion_cost(completion_response=resp))
+            usage = getattr(resp, "usage", None)
+            db = SessionLocal()
             try:
-                cost = float(completion_cost(completion_response=resp))
-            except Exception:  # noqa: BLE001
-                cost = 0.0
-        usage = getattr(resp, "usage", None)
-        db = SessionLocal()
-        try:
-            db.add(
-                AICallLog(
-                    user_id=user_id,
-                    scene=scene,
-                    model=model,
-                    input_tokens=int(getattr(usage, "prompt_tokens", 0) or 0),
-                    output_tokens=int(getattr(usage, "completion_tokens", 0) or 0),
-                    cost_usd=cost,
-                    latency_ms=latency_ms,
-                    status=status,
-                    error_message=error,
+                db.add(
+                    AICallLog(
+                        user_id=user_id,
+                        scene=scene,
+                        model=model,
+                        input_tokens=int(getattr(usage, "prompt_tokens", 0) or 0),
+                        output_tokens=int(getattr(usage, "completion_tokens", 0) or 0),
+                        cost_usd=cost,
+                        latency_ms=latency_ms,
+                        status=status,
+                        error_message=error,
+                    )
                 )
-            )
-            db.commit()
-        finally:
-            db.close()
+                db.commit()
+            finally:
+                db.close()
