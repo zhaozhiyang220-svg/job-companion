@@ -30,12 +30,7 @@ def _set_session_cookie(response: Response, user: User) -> None:
 @router.post("/magic-link/request")
 def request_magic_link(body: MagicLinkRequest, db: Session = Depends(get_db)) -> dict[str, bool]:
     settings = get_settings()
-    base = (
-        "http://localhost:3000"
-        if settings.app_env == "development"
-        else "https://app.example.com"
-    )
-    request_link(db, body.email, base)
+    request_link(db, body.email, settings.public_web_url)
     return {"sent": True}
 
 

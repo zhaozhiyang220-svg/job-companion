@@ -11,6 +11,8 @@ __pycache__
 .ruff_cache
 .env
 .env.*.local
+.env.prod
+infra/.env.prod
 .DS_Store
 coverage
 playwright-report

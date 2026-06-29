@@ -1,0 +1,20 @@
+# 同源反代（HTTP，IP demo）。所有请求经 :80 进来：
+#   /api/*                          → FastAPI
+#   /internal/dashboard/summary*    → FastAPI（成本仪表盘数据接口）
+#   /internal/dashboard/timeseries* → FastAPI
+#   其它（含 Next 页 /internal/dashboard 本身、/、/zh/* …） → Next
+# 注意 handle 块顺序：更具体的子路径必须排在通配的 handle 之前。
+:80 {
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+	handle /internal/dashboard/summary* {
+		reverse_proxy api:8000
+	}
+	handle /internal/dashboard/timeseries* {
+		reverse_proxy api:8000
+	}
+	handle {
+		reverse_proxy web:3000
+	}
+}

@@ -1,0 +1,24 @@
+# 缩小构建上下文，避免把本机依赖/产物/密钥拷进镜像
+**/node_modules
+**/.next
+**/.turbo
+**/dist
+**/.venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/playwright-report
+**/test-results
+**/coverage
+.git
+.github
+.vscode
+.idea
+docs
+# 密钥绝不进镜像
+**/.env
+**/.env.prod
+apps/api/.env
+infra/.env.prod

@@ -1,0 +1,59 @@
+# 生产单机部署：Caddy(:80) + web + api + postgres + redis
+# 仅 Caddy 对公网暴露 80；其余服务只在内网互通。
+# 启动：docker compose -f infra/docker-compose.prod.yml --env-file infra/.env.prod up -d --build
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-jc}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env.prod}
+      POSTGRES_DB: ${POSTGRES_DB:-jc}
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-jc} -d ${POSTGRES_DB:-jc}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # 不映射宿主端口：只对内网开放
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # 不映射宿主端口
+
+  api:
+    build:
+      context: ../apps/api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env.prod
+    # 先迁移后起服；--workers 2 适配 2C 机器
+    command: sh -c "alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000 --workers 2 --app-dir ."
+    # 不映射宿主端口：经 Caddy 反代
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile.prod
+    restart: unless-stopped
+    depends_on: [api]
+    # 不映射宿主端口：经 Caddy 反代
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on: [web, api]
+    ports: ["80:80"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

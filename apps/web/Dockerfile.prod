@@ -1,0 +1,25 @@
+# 生产用 web 镜像。构建上下文必须是 monorepo 仓库根，
+# 这样 pnpm 才能解析 workspace 依赖 @jc/shared-types。
+# 用法（在 docker-compose.prod.yml 里）：
+#   build:
+#     context: ..            # 仓库根
+#     dockerfile: apps/web/Dockerfile.prod
+FROM node:20-alpine AS build
+WORKDIR /repo
+RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+
+# 先拷 manifest + lockfile，利用缓存装依赖
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/web/package.json apps/web/package.json
+COPY packages/shared-types/package.json packages/shared-types/package.json
+RUN pnpm install --frozen-lockfile
+
+# 再拷源码并构建
+COPY . .
+# 空串 → apps/web/src/lib/api.ts 走相对路径（同源反代）。
+# 空串非 nullish，?? 'http://localhost:8000' 不会回退。
+ENV NEXT_PUBLIC_API_BASE=""
+RUN pnpm --filter web build
+
+EXPOSE 3000
+CMD ["pnpm", "--filter", "web", "start"]

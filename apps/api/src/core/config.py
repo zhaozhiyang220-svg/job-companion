@@ -17,6 +17,10 @@ class Settings(BaseSettings):
 
     field_encryption_key: str
 
+    # 对外可访问的 Web 地址（magic-link 邮件里的链接 base）。
+    # 本机默认 localhost；生产设成 http://<公网IP> 或正式域名。
+    public_web_url: str = "http://localhost:3000"
+
     wechat_app_id: str = ""
     wechat_app_secret: str = ""
     wechat_redirect_uri: str = ""

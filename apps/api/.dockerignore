@@ -1,0 +1,11 @@
+# api 镜像构建上下文 = apps/api。绝不把密钥/本机产物拷进镜像。
+.env
+.env.*
+!.env.example
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+*.egg-info
