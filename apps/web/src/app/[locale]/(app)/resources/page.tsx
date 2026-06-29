@@ -28,10 +28,10 @@ export default function ResourcesPage() {
       <CollectionSidebar currentId={cid} onPick={setCid} />
       <div className="flex-1 space-y-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+          <h1 className="heading">{t('title')}</h1>
           <button
             onClick={() => setOpen(true)}
-            className="inline-flex h-10 items-center gap-2 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800"
+            className="inline-flex h-10 items-center gap-2 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90"
           >
             <Plus className="h-4 w-4" aria-hidden="true" />
             {t('new_resource')}
@@ -43,7 +43,7 @@ export default function ResourcesPage() {
               key={f.label}
               onClick={() => setType(f.v)}
               className={`border px-3 py-1 text-sm ${
-                type === f.v ? 'border-black bg-black text-white' : 'border-neutral-300'
+                type === f.v ? 'border-fg bg-fg text-fg-inverse' : 'border-border'
               }`}
             >
               {t(f.label)}
@@ -54,7 +54,7 @@ export default function ResourcesPage() {
           {(data?.items ?? []).map((r) => (
             <ResourceCard key={r.id} r={r} />
           ))}
-          {data?.items.length === 0 && <p className="text-sm text-neutral-500">{t('empty')}</p>}
+          {data?.items.length === 0 && <p className="text-sm text-fg-subtle">{t('empty')}</p>}
         </div>
       </div>
       {open && <NewResourceDialog onClose={() => setOpen(false)} />}

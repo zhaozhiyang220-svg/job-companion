@@ -22,7 +22,7 @@ export function CoachInquiryButton({
           track(Events.COACH_INQUIRY_OPENED, { appId, branchId, source: 'resume_workspace' })
           setOpen(true)
         }}
-        className="inline-flex h-8 items-center gap-1 border border-[--color-accent] px-3 text-sm text-[--color-accent] hover:bg-orange-50"
+        className="inline-flex h-8 items-center gap-1 border border-[--color-accent] px-3 text-sm text-[--color-accent] hover:bg-accent-soft"
       >
         <MessageSquareQuote className="h-4 w-4" aria-hidden="true" />
         {t('coach_btn')}

@@ -14,12 +14,12 @@ export function LinkedResourcesPanel({ appId }: { appId: string }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="mt-3 border border-neutral-200 p-3 text-sm">
+    <div className="mt-3 border border-border p-3 text-sm">
       <div className="flex items-center justify-between">
         <strong>{t('linked_title')}</strong>
         <button
           onClick={() => setOpen(true)}
-          className="inline-flex items-center gap-1 border border-neutral-300 px-2 py-0.5 text-xs hover:border-black"
+          className="inline-flex items-center gap-1 border border-border px-2 py-0.5 text-xs hover:border-fg"
         >
           <Plus className="h-3 w-3" aria-hidden="true" />
           {t('link_btn')}
@@ -32,12 +32,12 @@ export function LinkedResourcesPanel({ appId }: { appId: string }) {
             <span>
               {r.title}
               {r.ai_summary && (
-                <span className="text-neutral-500"> — {r.ai_summary.slice(0, 30)}…</span>
+                <span className="text-fg-subtle"> — {r.ai_summary.slice(0, 30)}…</span>
               )}
             </span>
           </li>
         ))}
-        {linked?.length === 0 && <li className="text-neutral-400">{t('linked_empty')}</li>}
+        {linked?.length === 0 && <li className="text-fg-subtle">{t('linked_empty')}</li>}
       </ul>
       {open && <PickerDialog appId={appId} onClose={() => setOpen(false)} />}
     </div>
@@ -54,7 +54,7 @@ function PickerDialog({ appId, onClose }: { appId: string; onClose: () => void }
       onClick={onClose}
     >
       <div
-        className="max-h-[70vh] w-96 overflow-auto border border-black bg-white p-4 shadow-md"
+        className="max-h-[70vh] w-96 overflow-auto border border-fg bg-bg p-4 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h4 className="mb-2 font-bold">{t('picker_title')}</h4>
@@ -66,7 +66,7 @@ function PickerDialog({ appId, onClose }: { appId: string; onClose: () => void }
                   link.mutate(r.id)
                   onClose()
                 }}
-                className="w-full px-2 py-1 text-left hover:bg-neutral-100"
+                className="w-full px-2 py-1 text-left hover:bg-bg-muted"
               >
                 {r.title}
               </button>

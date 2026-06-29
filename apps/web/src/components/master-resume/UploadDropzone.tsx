@@ -57,7 +57,7 @@ export function UploadDropzone({ onParsed }: { onParsed: () => void }) {
         if (f) void handle(f)
       }}
       onClick={() => inp.current?.click()}
-      className="flex cursor-pointer flex-col items-center gap-3 border-2 border-dashed border-neutral-300 p-12 text-center hover:border-black"
+      className="flex cursor-pointer flex-col items-center gap-3 border-2 border-dashed border-border p-12 text-center hover:border-fg"
     >
       <input
         ref={inp}
@@ -69,7 +69,7 @@ export function UploadDropzone({ onParsed }: { onParsed: () => void }) {
           if (f) void handle(f)
         }}
       />
-      <Upload className="h-8 w-8 text-neutral-400" aria-hidden="true" />
+      <Upload className="h-8 w-8 text-fg-subtle" aria-hidden="true" />
       {stage === 'idle' && <p className="text-sm">{t('drop_or_click')}</p>}
       {stage === 'uploading' && (
         <p className="text-sm">
@@ -78,7 +78,7 @@ export function UploadDropzone({ onParsed }: { onParsed: () => void }) {
       )}
       {stage === 'parsing' && <p className="text-sm">{t('parsing')}</p>}
       {stage === 'error' && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-destructive">
           {err}
         </p>
       )}

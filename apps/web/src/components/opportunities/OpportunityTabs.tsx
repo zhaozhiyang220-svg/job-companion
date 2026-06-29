@@ -27,7 +27,7 @@ export function OpportunityTabs({ appId }: { appId: string }) {
   const path = usePathname()
 
   return (
-    <nav className="flex gap-1 border-b border-neutral-200">
+    <nav className="flex gap-1 border-b border-border">
       {TABS.map((tab) => {
         const href = `/${locale}/opportunities/${appId}/${tab.key}`
         const active = path === href
@@ -36,7 +36,7 @@ export function OpportunityTabs({ appId }: { appId: string }) {
             <span
               key={tab.key}
               title={tab.soonKey ? t(tab.soonKey) : undefined}
-              className="inline-flex cursor-not-allowed items-center gap-1 px-3 pb-2 text-sm text-neutral-300"
+              className="inline-flex cursor-not-allowed items-center gap-1 px-3 pb-2 text-sm text-fg-subtle"
             >
               <tab.Icon className="h-4 w-4" aria-hidden="true" />
               {t(tab.labelKey)}
@@ -49,7 +49,7 @@ export function OpportunityTabs({ appId }: { appId: string }) {
             key={tab.key}
             href={href}
             className={`-mb-px inline-flex items-center gap-1 border-b-2 px-3 pb-2 text-sm ${
-              active ? 'border-black font-bold' : 'border-transparent text-neutral-600 hover:text-black'
+              active ? 'border-fg font-bold' : 'border-transparent text-fg-muted hover:text-fg'
             }`}
           >
             <tab.Icon className="h-4 w-4" aria-hidden="true" />

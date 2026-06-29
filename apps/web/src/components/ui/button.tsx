@@ -8,10 +8,10 @@ const button = cva(
   {
     variants: {
       variant: {
-        primary: 'border border-fg bg-fg text-fg-inverse hover:bg-neutral-800',
+        primary: 'border border-fg bg-fg text-fg-inverse hover:opacity-90',
         secondary: 'border border-fg bg-bg text-fg hover:bg-bg-subtle',
         ghost: 'bg-transparent text-fg hover:bg-bg-muted',
-        destructive: 'border border-destructive bg-destructive text-white hover:opacity-90',
+        destructive: 'border border-destructive bg-destructive text-fg-inverse hover:opacity-90',
         accent: 'border border-accent bg-accent text-accent-fg hover:bg-accent-hover',
       },
       size: {

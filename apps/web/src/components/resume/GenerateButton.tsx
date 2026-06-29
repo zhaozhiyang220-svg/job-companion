@@ -30,14 +30,14 @@ export function GenerateButton({
       <button
         onClick={go}
         disabled={gen.isPending}
-        className={`border border-black bg-black text-white hover:bg-neutral-800 disabled:opacity-40 ${
+        className={`border border-fg bg-fg text-fg-inverse hover:opacity-90 disabled:opacity-40 ${
           isFirst ? 'w-full py-6 text-lg' : 'h-10 px-4 text-sm'
         }`}
       >
         {gen.isPending ? t('generating') : isFirst ? t('generate_first') : t('generate_next')}
       </button>
       {gen.isError && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-destructive">
           {needMaster ? t('need_master') : t('generate_failed')}
         </p>
       )}

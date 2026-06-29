@@ -19,7 +19,7 @@ export function RenderedResume({
             <div className="font-bold">
               {e.company} — {e.title}
             </div>
-            <div className="text-xs text-neutral-500">
+            <div className="text-xs text-fg-subtle">
               {e.period} · {e.industry}
             </div>
             <div className="text-sm">{e.scope}</div>
@@ -42,7 +42,7 @@ export function RenderedResume({
             <div className="font-bold">
               {p.project_name} {p.role && `· ${p.role}`}
             </div>
-            <div className="text-xs text-neutral-500">{p.period}</div>
+            <div className="text-xs text-fg-subtle">{p.period}</div>
             <ul className="list-disc pl-4 text-sm">
               {p.star?.situation && (
                 <li>
@@ -74,7 +74,7 @@ export function RenderedResume({
                 {p._inserted_keywords?.map((k, i) => (
                   <span
                     key={i}
-                    className="mr-1 bg-blue-100 px-2 py-0.5 text-xs text-blue-700"
+                    className="mr-1 border border-accent bg-accent-soft px-2 py-0.5 text-xs text-accent"
                   >
                     +{k}
                   </span>
@@ -90,7 +90,7 @@ export function RenderedResume({
             <span
               key={a.id}
               className={`border px-2 py-1 text-xs ${
-                highlight && a._emphasized === 'high' ? 'border-yellow-400 bg-yellow-100' : 'border-neutral-300'
+                highlight && a._emphasized === 'high' ? 'border-accent bg-accent-soft text-accent' : 'border-border'
               } ${highlight && a._hidden ? 'line-through opacity-30' : ''}`}
             >
               {a.skill_name} Lv{a.level}
@@ -105,7 +105,7 @@ export function RenderedResume({
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <h3 className="mb-2 border-b border-black pb-1 font-bold">{title}</h3>
+      <h3 className="mb-2 border-b border-fg pb-1 font-bold">{title}</h3>
       {children}
     </div>
   )
@@ -122,14 +122,14 @@ function Card({
   hidden?: boolean
   patched?: boolean
 }) {
-  if (hidden) return <div className="border border-neutral-200 p-2 line-through opacity-30">{children}</div>
+  if (hidden) return <div className="border border-border p-2 line-through opacity-30">{children}</div>
   const bg =
     emphasis === 'high'
-      ? 'border-yellow-400 bg-yellow-50'
+      ? 'border-accent bg-accent-soft'
       : emphasis === 'medium'
-        ? 'bg-yellow-50/50 border-neutral-200'
+        ? 'border-l-2 border-l-accent bg-bg-subtle'
         : patched
-          ? 'border-blue-300 bg-blue-50'
-          : 'border-neutral-200'
+          ? 'border-l-2 border-l-accent bg-bg-subtle'
+          : 'border-border'
   return <div className={`border p-3 ${bg}`}>{children}</div>
 }

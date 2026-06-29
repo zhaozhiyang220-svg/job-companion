@@ -28,7 +28,7 @@ export function TodoList() {
           value={val}
           onChange={(e) => setVal(e.target.value)}
           placeholder="Add task…"
-          className="w-full border border-black px-3 py-2"
+          className="w-full border border-fg px-3 py-2"
           aria-label="Add task"
         />
       </form>
@@ -41,7 +41,7 @@ export function TodoList() {
               onChange={() => toggle(i.id)}
               aria-label={i.text}
             />
-            <span className={i.done ? 'text-neutral-400 line-through' : ''}>{i.text}</span>
+            <span className={i.done ? 'text-fg-subtle line-through' : ''}>{i.text}</span>
           </li>
         ))}
       </ul>

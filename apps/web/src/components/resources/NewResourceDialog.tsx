@@ -42,7 +42,7 @@ export function NewResourceDialog({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl space-y-3 border border-black bg-white p-6 shadow-md"
+        className="w-full max-w-2xl space-y-3 border border-fg bg-bg p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-bold">{t('new_resource')}</h3>
@@ -52,7 +52,7 @@ export function NewResourceDialog({ onClose }: { onClose: () => void }) {
               key={tp}
               onClick={() => setType(tp)}
               className={`border px-2 py-1 ${
-                tp === type ? 'border-black bg-black text-white' : 'border-neutral-300'
+                tp === type ? 'border-fg bg-fg text-fg-inverse' : 'border-border'
               }`}
             >
               {t(`type_${tp}`)}
@@ -63,35 +63,35 @@ export function NewResourceDialog({ onClose }: { onClose: () => void }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={t('fields_title')}
-          className="w-full border border-black px-3 py-2"
+          className="w-full border border-fg px-3 py-2"
         />
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={t('fields_content')}
           rows={8}
-          className="w-full border border-black px-3 py-2"
+          className="w-full border border-fg px-3 py-2"
         />
         <input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder={t('fields_source_url')}
-          className="w-full border border-neutral-300 px-3 py-2 text-sm"
+          className="w-full border border-border px-3 py-2 text-sm"
         />
         <input
           value={tags}
           onChange={(e) => setTags(e.target.value)}
           placeholder={t('fields_tags')}
-          className="w-full border border-neutral-300 px-3 py-2 text-sm"
+          className="w-full border border-border px-3 py-2 text-sm"
         />
         <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-neutral-100">
+          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-bg-muted">
             {t('cancel')}
           </button>
           <button
             onClick={save}
             disabled={create.isPending || !title.trim()}
-            className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800 disabled:opacity-40"
+            className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90 disabled:opacity-40"
           >
             {create.isPending ? '…' : t('save')}
           </button>

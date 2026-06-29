@@ -15,8 +15,8 @@ export function StatCards({ s }: { s: DashboardSummary }) {
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
       {cells.map((c) => (
-        <div key={c.k} className="border border-neutral-200 p-3 text-center">
-          <div className="text-xs text-neutral-500">{c.k}</div>
+        <div key={c.k} className="border border-border p-3 text-center">
+          <div className="text-xs text-fg-subtle">{c.k}</div>
           <div className="mt-1 text-2xl font-bold tabular-nums">{c.v}</div>
         </div>
       ))}

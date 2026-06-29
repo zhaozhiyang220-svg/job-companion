@@ -10,7 +10,7 @@ export function ResourceCard({ r }: { r: Resource }) {
   const Icon = RESOURCE_ICON[r.type] ?? RESOURCE_ICON.other
 
   return (
-    <div className="space-y-1 border border-neutral-200 p-3">
+    <div className="space-y-1 border border-border p-3">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 font-semibold">
           <Icon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
@@ -20,15 +20,15 @@ export function ResourceCard({ r }: { r: Resource }) {
           onClick={() => {
             if (confirm(t('delete_confirm'))) del.mutate(r.id)
           }}
-          className="text-neutral-400 hover:text-red-600"
+          className="text-fg-subtle hover:text-destructive"
           aria-label={t('delete_confirm')}
         >
           <X className="h-4 w-4" />
         </button>
       </div>
-      {r.ai_summary && <p className="text-sm text-neutral-700">{r.ai_summary}</p>}
+      {r.ai_summary && <p className="text-sm text-fg-muted">{r.ai_summary}</p>}
       {r.linked_company_names.length > 0 && (
-        <div className="flex items-center gap-1 text-xs text-neutral-600">
+        <div className="flex items-center gap-1 text-xs text-fg-muted">
           <Building2 className="h-3 w-3" aria-hidden="true" />
           {r.linked_company_names.join(', ')}
         </div>
@@ -51,7 +51,7 @@ export function ResourceCard({ r }: { r: Resource }) {
       {r.tags.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {r.tags.map((g) => (
-            <span key={g} className="bg-neutral-100 px-2 py-0.5 text-xs">
+            <span key={g} className="bg-bg-muted px-2 py-0.5 text-xs">
               {g}
             </span>
           ))}

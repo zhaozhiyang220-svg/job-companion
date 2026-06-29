@@ -22,11 +22,11 @@ export function CollectionSidebar({
   const [newName, setNewName] = useState('')
 
   return (
-    <aside className="w-56 flex-shrink-0 space-y-1 border-r border-neutral-200 pr-3 text-sm">
+    <aside className="w-56 flex-shrink-0 space-y-1 border-r border-border pr-3 text-sm">
       <button
         onClick={() => onPick(null)}
         className={`flex w-full items-center gap-2 px-2 py-1 text-left ${
-          !currentId ? 'bg-black text-white' : 'hover:bg-neutral-100'
+          !currentId ? 'bg-fg text-fg-inverse' : 'hover:bg-bg-muted'
         }`}
       >
         <BookOpen className="h-4 w-4" aria-hidden="true" />
@@ -37,7 +37,7 @@ export function CollectionSidebar({
           <button
             onClick={() => onPick(c.id)}
             className={`flex flex-1 items-center gap-2 px-2 py-1 text-left ${
-              currentId === c.id ? 'bg-black text-white' : 'hover:bg-neutral-100'
+              currentId === c.id ? 'bg-fg text-fg-inverse' : 'hover:bg-bg-muted'
             }`}
           >
             <FolderOpen className="h-4 w-4" aria-hidden="true" />
@@ -47,7 +47,7 @@ export function CollectionSidebar({
             onClick={() => {
               if (confirm(t('delete_confirm'))) del.mutate(c.id)
             }}
-            className="px-1 text-neutral-400 opacity-0 hover:text-red-600 group-hover:opacity-100"
+            className="px-1 text-fg-subtle opacity-0 hover:text-destructive group-hover:opacity-100"
             aria-label={t('delete_confirm')}
           >
             <X className="h-3 w-3" />
@@ -61,13 +61,13 @@ export function CollectionSidebar({
           create.mutate({ name: newName.trim() })
           setNewName('')
         }}
-        className="border-t border-neutral-200 pt-3"
+        className="border-t border-border pt-3"
       >
         <input
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           placeholder={t('new_collection')}
-          className="w-full border border-neutral-300 px-2 py-1 text-sm"
+          className="w-full border border-border px-2 py-1 text-sm"
         />
       </form>
     </aside>

@@ -32,18 +32,18 @@ export function CapacityGate({ code, onClose }: { code: string; onClose: () => v
       onClick={onClose}
     >
       <div
-        className="w-96 border border-black bg-white p-6 shadow-md"
+        className="w-96 border border-fg bg-bg p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-bold">{t('gate_title')}</h3>
-        <p className="mt-2 text-sm text-neutral-700">{t(MSG_KEY[code] ?? 'gate_capacity_active')}</p>
+        <p className="mt-2 text-sm text-fg-muted">{t(MSG_KEY[code] ?? 'gate_capacity_active')}</p>
         <div className="mt-4 flex justify-end gap-2">
-          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-neutral-100">
+          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-bg-muted">
             {t('gate_close')}
           </button>
           <button
             onClick={() => setOpenCoach(true)}
-            className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800"
+            className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90"
           >
             {t('gate_find_coach')}
           </button>

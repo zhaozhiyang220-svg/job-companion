@@ -40,7 +40,7 @@ export function NewInvestmentDialog({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md space-y-3 border border-black bg-white p-6 shadow-md"
+        className="w-full max-w-md space-y-3 border border-fg bg-bg p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-bold">{t('new')}</h3>
@@ -52,7 +52,7 @@ export function NewInvestmentDialog({
                 key={a}
                 onClick={() => setAction(a)}
                 className={`inline-flex items-center gap-1 border px-2 py-1 ${
-                  action === a ? 'border-black bg-black text-white' : 'border-neutral-300'
+                  action === a ? 'border-fg bg-fg text-fg-inverse' : 'border-border'
                 }`}
               >
                 <Icon className="h-4 w-4" aria-hidden="true" />
@@ -65,7 +65,7 @@ export function NewInvestmentDialog({
           type="datetime-local"
           value={when}
           onChange={(e) => setWhen(e.target.value)}
-          className="w-full border border-black px-3 py-2"
+          className="w-full border border-fg px-3 py-2"
         />
         <div>
           <label className="mb-1 block text-xs">{t('channel')}</label>
@@ -73,7 +73,7 @@ export function NewInvestmentDialog({
             list="ch-options"
             value={channel}
             onChange={(e) => setChannel(e.target.value)}
-            className="w-full border border-neutral-300 px-3 py-2"
+            className="w-full border border-border px-3 py-2"
           />
           <datalist id="ch-options">
             {channelOptions.map((c) => (
@@ -86,7 +86,7 @@ export function NewInvestmentDialog({
           <select
             value={branchId}
             onChange={(e) => setBranchId(e.target.value)}
-            className="w-full border border-neutral-300 px-3 py-2"
+            className="w-full border border-border px-3 py-2"
           >
             <option value="">—</option>
             {(branches ?? []).map((b) => (
@@ -102,16 +102,16 @@ export function NewInvestmentDialog({
           onChange={(e) => setNotes(e.target.value)}
           placeholder={t('notes')}
           rows={2}
-          className="w-full border border-neutral-300 px-3 py-2"
+          className="w-full border border-border px-3 py-2"
         />
         <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-neutral-100">
+          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-bg-muted">
             {t('cancel')}
           </button>
           <button
             onClick={save}
             disabled={create.isPending}
-            className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800 disabled:opacity-40"
+            className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90 disabled:opacity-40"
           >
             {create.isPending ? '…' : t('save')}
           </button>

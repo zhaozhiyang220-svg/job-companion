@@ -14,9 +14,9 @@ export function StatGrid({ stats }: { stats: WeeklyStats }) {
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
       {cells.map((c) => (
-        <div key={c.k} className="border border-neutral-200 p-4 text-center">
+        <div key={c.k} className="border border-border p-4 text-center">
           <div className="text-3xl font-bold tabular-nums">{c.v}</div>
-          <div className="mt-1 text-xs text-neutral-500">{t(`stat_${c.k}`)}</div>
+          <div className="mt-1 text-xs text-fg-subtle">{t(`stat_${c.k}`)}</div>
         </div>
       ))}
     </div>

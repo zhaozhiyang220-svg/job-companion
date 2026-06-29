@@ -15,7 +15,7 @@ export function WeekPicker({
     <select
       value={value ?? ''}
       onChange={(e) => onChange(e.target.value || undefined)}
-      className="border border-neutral-300 px-3 py-1 text-sm"
+      className="border border-border px-3 py-1 text-sm"
     >
       <option value="">{t('this_week')}</option>
       {(data ?? []).map((h) => (

@@ -21,7 +21,7 @@ export function ResumeCards({ data }: { data: MasterResumeData }) {
         <button
           onClick={() => diag.mutate()}
           disabled={diag.isPending}
-          className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800 disabled:opacity-40"
+          className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90 disabled:opacity-40"
         >
           {diag.isPending ? t('diagnosing') : t('diagnose')}
         </button>
@@ -57,9 +57,9 @@ function Col({ title, onAdd, children }: { title: string; onAdd: () => void; chi
   const t = useTranslations('common')
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between border-b border-black pb-1">
+      <div className="flex items-center justify-between border-b border-fg pb-1">
         <h2 className="font-bold">{title}</h2>
-        <button onClick={onAdd} className="text-neutral-500 hover:text-black" aria-label={t('add')}>
+        <button onClick={onAdd} className="text-fg-subtle hover:text-fg" aria-label={t('add')}>
           <Plus className="h-4 w-4" />
         </button>
       </div>

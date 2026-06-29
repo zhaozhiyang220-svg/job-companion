@@ -18,12 +18,12 @@ export default function OppLayout({
 
   return (
     <div className="space-y-4">
-      <header className="border-b border-neutral-200 pb-3">
+      <header className="border-b border-border pb-3">
         <h1 className="text-xl font-bold tracking-tight">
           {jp?.company_name || t('loading')}
           {jp?.job_title ? ` · ${jp.job_title}` : ''}
         </h1>
-        <div className="text-sm text-neutral-500">
+        <div className="text-sm text-fg-subtle">
           {jp ? `${jp.department} · ${jp.salary_range}` : ''}
         </div>
       </header>

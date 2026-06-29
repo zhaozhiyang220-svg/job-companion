@@ -29,7 +29,7 @@ export function NewOpportunityDialog({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl border border-black bg-white p-6 shadow-md"
+        className="w-full max-w-xl border border-fg bg-bg p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="mb-3 font-bold">{t('new')}</h3>
@@ -38,21 +38,21 @@ export function NewOpportunityDialog({ onClose }: { onClose: () => void }) {
           onChange={(e) => setText(e.target.value)}
           rows={10}
           placeholder={t('paste_jd')}
-          className="w-full border border-black p-2 text-sm"
+          className="w-full border border-fg p-2 text-sm"
         />
         {err && (
-          <p role="alert" className="mt-2 text-sm text-red-600">
+          <p role="alert" className="mt-2 text-sm text-destructive">
             {err}
           </p>
         )}
         <div className="mt-3 flex justify-end gap-2">
-          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-neutral-100">
+          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-bg-muted">
             {t('cancel')}
           </button>
           <button
             onClick={submit}
             disabled={create.isPending || !text.trim()}
-            className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800 disabled:opacity-40"
+            className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90 disabled:opacity-40"
           >
             {create.isPending ? t('parsing') : t('submit')}
           </button>

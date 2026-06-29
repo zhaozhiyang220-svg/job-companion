@@ -37,7 +37,7 @@ export function CoachInquiryDrawer({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md space-y-3 border border-black bg-white p-6 shadow-md"
+        className="w-full max-w-md space-y-3 border border-fg bg-bg p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-bold">{t('title')}</h3>
@@ -46,11 +46,11 @@ export function CoachInquiryDrawer({
         </p>
         {av &&
           (av.available ? (
-            <p className="text-xs text-green-600">
+            <p className="text-xs text-success">
               {t('slots_open', { n: av.slots_total - av.slots_taken })}
             </p>
           ) : (
-            <p className="text-xs text-red-600">{t('slots_full')}</p>
+            <p className="text-xs text-destructive">{t('slots_full')}</p>
           ))}
         {!done && av?.available && (
           <>
@@ -58,26 +58,26 @@ export function CoachInquiryDrawer({
               value={contact}
               onChange={(e) => setContact(e.target.value)}
               placeholder={t('contact_label')}
-              className="w-full border border-black px-3 py-2"
+              className="w-full border border-fg px-3 py-2"
             />
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder={t('notes_label')}
               rows={3}
-              className="w-full border border-neutral-300 px-3 py-2"
+              className="w-full border border-border px-3 py-2"
             />
             <button
               onClick={submit}
               disabled={!contact || create.isPending}
-              className="h-10 w-full border border-black bg-black text-white hover:bg-neutral-800 disabled:opacity-40"
+              className="h-10 w-full border border-fg bg-fg text-fg-inverse hover:opacity-90 disabled:opacity-40"
             >
               {create.isPending ? t('submitting') : t('submit')}
             </button>
           </>
         )}
         {done && (
-          <div className="flex items-center gap-2 text-green-600">
+          <div className="flex items-center gap-2 text-success">
             <Check className="h-4 w-4" aria-hidden="true" />
             {t('submitted')}
           </div>
@@ -92,7 +92,7 @@ export function CoachInquiryDrawer({
         )}
         <button
           onClick={onClose}
-          className="h-10 w-full border border-neutral-300 hover:bg-neutral-100"
+          className="h-10 w-full border border-border hover:bg-bg-muted"
         >
           {t('close')}
         </button>

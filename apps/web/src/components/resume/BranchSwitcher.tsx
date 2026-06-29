@@ -18,7 +18,7 @@ export function BranchSwitcher({
           key={b.id}
           onClick={() => onPick(b.id)}
           className={`h-8 border px-3 font-mono text-sm ${
-            b.id === currentId ? 'border-black bg-black text-white' : 'border-neutral-300'
+            b.id === currentId ? 'border-fg bg-fg text-fg-inverse' : 'border-border'
           }`}
         >
           {b.version_label}

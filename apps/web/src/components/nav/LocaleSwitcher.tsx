@@ -9,7 +9,7 @@ export function LocaleSwitcher() {
   return (
     <button
       onClick={() => router.push(path.replace(`/${locale}`, `/${other}`))}
-      className="h-8 border border-neutral-300 px-2 text-sm hover:border-black"
+      className="h-8 border border-border px-2 text-sm hover:border-fg"
       aria-label={`Switch to ${other}`}
     >
       {locale === 'zh' ? 'EN' : '中'}

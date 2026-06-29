@@ -19,8 +19,8 @@ export function SimpleChart({
   const y = (v: number) => H - pad - (v / max) * (H - 2 * pad)
   const pts = data.map((d, i) => `${x(i)},${y(Number(d[valueKey]) || 0)}`).join(' ')
   return (
-    <div className="border border-neutral-200 p-3">
-      <div className="mb-1 text-xs text-neutral-500">
+    <div className="border border-border p-3">
+      <div className="mb-1 text-xs text-fg-subtle">
         {label} · max {max.toFixed(2)}
       </div>
       <svg width={W} height={H} className="max-w-full">

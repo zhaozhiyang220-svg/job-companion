@@ -43,12 +43,12 @@ export function IntakeDialog({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">
-      <div className="h-96 space-y-2 overflow-auto border border-neutral-200 p-4">
+      <div className="h-96 space-y-2 overflow-auto border border-border p-4">
         {turns.map((turn, i) => (
           <div key={i} className={turn.role === 'q' ? '' : 'text-right'}>
             <span
               className={`inline-block px-3 py-2 text-sm ${
-                turn.role === 'q' ? 'bg-neutral-100' : 'bg-black text-white'
+                turn.role === 'q' ? 'bg-bg-muted' : 'bg-fg text-fg-inverse'
               }`}
             >
               {turn.text}
@@ -68,12 +68,12 @@ export function IntakeDialog({ onDone }: { onDone: () => void }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={t('intake_input_placeholder')}
-            className="h-10 flex-1 border border-black px-3"
+            className="h-10 flex-1 border border-fg px-3"
           />
           <button
             type="submit"
             disabled={answer.isPending}
-            className="h-10 border border-black bg-black px-4 text-sm text-white disabled:opacity-40"
+            className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse disabled:opacity-40"
           >
             {t('intake_send')}
           </button>
@@ -82,7 +82,7 @@ export function IntakeDialog({ onDone }: { onDone: () => void }) {
         <button
           onClick={finish}
           disabled={finalize.isPending}
-          className="h-12 w-full border border-black bg-black text-white disabled:opacity-40"
+          className="h-12 w-full border border-fg bg-fg text-fg-inverse disabled:opacity-40"
         >
           {finalize.isPending ? t('intake_generating') : t('intake_finish')}
         </button>

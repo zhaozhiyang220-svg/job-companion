@@ -24,7 +24,7 @@ export function ObservationCard({
 
   if (!text) return null
   return (
-    <div className="border border-black p-4">
+    <div className="border border-fg p-4">
       <h3 className="flex items-center gap-2 text-sm font-bold">
         <BarChart3 className="h-4 w-4" aria-hidden="true" />
         {t('observation')}
@@ -32,7 +32,7 @@ export function ObservationCard({
       <p className="mt-2 text-base leading-relaxed">{text}</p>
       {actions.length > 0 && (
         <>
-          <h4 className="mt-3 text-xs text-neutral-500">{t('actions')}</h4>
+          <h4 className="mt-3 text-xs text-fg-subtle">{t('actions')}</h4>
           <div className="mt-1 flex flex-wrap gap-2">
             {actions.map((a, i) =>
               a.url ? (
@@ -40,12 +40,12 @@ export function ObservationCard({
                   key={i}
                   href={a.url.startsWith('/') ? `/${locale}${a.url}` : a.url}
                   onClick={() => track(Events.WEEKLY_ACTION_CLICKED, { label: a.label })}
-                  className="border border-black px-3 py-1 text-sm hover:bg-neutral-100"
+                  className="border border-fg px-3 py-1 text-sm hover:bg-bg-muted"
                 >
                   {a.label}
                 </Link>
               ) : (
-                <span key={i} className="border border-neutral-300 px-3 py-1 text-sm">
+                <span key={i} className="border border-border px-3 py-1 text-sm">
                   {a.label}
                 </span>
               ),

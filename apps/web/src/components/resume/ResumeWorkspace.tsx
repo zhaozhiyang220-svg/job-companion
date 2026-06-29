@@ -35,7 +35,7 @@ export function ResumeWorkspace({ appId, branch }: { appId: string; branch: Bran
               setMode(m)
             }}
             className={`h-8 border px-3 text-sm ${
-              mode === m ? 'border-black bg-black text-white' : 'border-neutral-300'
+              mode === m ? 'border-fg bg-fg text-fg-inverse' : 'border-border'
             }`}
           >
             {modeLabel[m]}
@@ -44,7 +44,7 @@ export function ResumeWorkspace({ appId, branch }: { appId: string; branch: Bran
         <div className="ml-auto flex gap-2">
           <button
             onClick={() => setExportOpen(true)}
-            className="inline-flex h-8 items-center gap-1 border border-black bg-black px-3 text-sm text-white hover:bg-neutral-800"
+            className="inline-flex h-8 items-center gap-1 border border-fg bg-fg px-3 text-sm text-fg-inverse hover:opacity-90"
           >
             <Upload className="h-4 w-4" aria-hidden="true" />
             {t('export_pdf')}
@@ -88,7 +88,7 @@ export function ResumeWorkspace({ appId, branch }: { appId: string; branch: Bran
 
 function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="border border-neutral-200 p-3">
+    <div className="border border-border p-3">
       <h4 className="mb-2 text-sm font-bold">{title}</h4>
       {children}
     </div>

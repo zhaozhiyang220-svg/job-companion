@@ -19,7 +19,7 @@ export function ExperienceCardItem({ card }: { card: ExperienceCard }) {
   const save = () => update.mutate({ id: card.id, body: c })
 
   return (
-    <div className="space-y-2 border border-neutral-200 p-3">
+    <div className="space-y-2 border border-border p-3">
       {card.is_current && <CurrentCompanyWarning />}
       <div className="flex items-center justify-between gap-2">
         <input
@@ -31,7 +31,7 @@ export function ExperienceCardItem({ card }: { card: ExperienceCard }) {
         />
         <button
           onClick={() => del.mutate(card.id)}
-          className="text-neutral-400 hover:text-red-600"
+          className="text-fg-subtle hover:text-destructive"
           aria-label={t('delete')}
         >
           <X className="h-4 w-4" />
@@ -42,21 +42,21 @@ export function ExperienceCardItem({ card }: { card: ExperienceCard }) {
         onChange={(e) => setC({ ...c, title: e.target.value })}
         onBlur={save}
         placeholder={t('title_field')}
-        className="w-full border-b border-neutral-200 bg-transparent text-sm"
+        className="w-full border-b border-border bg-transparent text-sm"
       />
       <input
         value={c.period}
         onChange={(e) => setC({ ...c, period: e.target.value })}
         onBlur={save}
         placeholder={t('period_field')}
-        className="w-full border-b border-neutral-200 bg-transparent text-xs"
+        className="w-full border-b border-border bg-transparent text-xs"
       />
       <textarea
         value={c.scope}
         onChange={(e) => setC({ ...c, scope: e.target.value })}
         onBlur={save}
         placeholder={t('scope_field')}
-        className="w-full border border-neutral-300 p-1 text-sm"
+        className="w-full border border-border p-1 text-sm"
         rows={2}
       />
     </div>

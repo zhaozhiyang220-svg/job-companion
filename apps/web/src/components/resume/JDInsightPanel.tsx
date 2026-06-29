@@ -15,9 +15,9 @@ export function JDInsightPanel({
   const t = useTranslations('resume_tab')
   const reqs = jp?.requirements_parsed ?? {}
   return (
-    <aside className="w-72 flex-shrink-0 space-y-3 border-r border-neutral-200 pr-4 text-sm">
+    <aside className="w-72 flex-shrink-0 space-y-3 border-r border-border pr-4 text-sm">
       <div>
-        <div className="text-xs text-neutral-500">{t('match_score')}</div>
+        <div className="text-xs text-fg-subtle">{t('match_score')}</div>
         <div className="text-3xl font-bold tabular-nums">
           {matchScore ?? '—'} <span className="text-base">/ 100</span>
         </div>

@@ -49,17 +49,17 @@ function Dashboard() {
           type="password"
           placeholder="internal password"
           onBlur={(e) => setPwd(e.target.value)}
-          className="border border-black px-3 py-2"
+          className="border border-fg px-3 py-2"
         />
       </main>
     )
   }
-  if (err) return <main className="p-8 text-red-600">{err}</main>
+  if (err) return <main className="p-8 text-destructive">{err}</main>
   if (!summary) return <main className="p-8">Loading…</main>
 
   return (
     <main className="mx-auto max-w-5xl space-y-6 p-6">
-      <h1 className="text-2xl font-bold tracking-tight">Internal Dashboard</h1>
+      <h1 className="heading">Internal Dashboard</h1>
       <StatCards s={summary} />
       <SimpleChart data={series} valueKey="dau" label="DAU" />
       <SimpleChart data={series} valueKey="ai_calls" label="AI calls / day" />

@@ -32,11 +32,11 @@ function VerifyInner() {
   return (
     <main className="flex min-h-screen items-center justify-center p-8">
       {err ? (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-destructive">
           {err}
         </p>
       ) : (
-        <p className="text-sm text-neutral-600">{t('verifying')}</p>
+        <p className="text-sm text-fg-muted">{t('verifying')}</p>
       )}
     </main>
   )

@@ -10,7 +10,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <div className="flex min-h-screen">
         <SideNav />
         <div className="flex flex-1 flex-col">
-          <header className="sticky top-0 z-40 flex h-14 items-center justify-end gap-3 border-b border-border bg-bg/90 px-6 backdrop-blur">
+          <header className="sticky top-0 z-40 flex h-14 items-center justify-end gap-3 border-b border-border bg-bg px-6">
             <DisguiseToggle />
             <LocaleSwitcher />
           </header>

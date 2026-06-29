@@ -13,18 +13,18 @@ export function OpportunityCard({ item }: { item: ApplicationListItem }) {
     <Link
       href={`/${locale}/opportunities/${item.id}`}
       onClick={() => track(Events.OPPORTUNITY_OPENED, { id: item.id })}
-      className="block border border-neutral-200 p-4 transition-colors hover:border-black"
+      className="block border border-border p-4 transition-colors hover:border-fg"
     >
       <div className="flex items-center justify-between gap-2">
         <strong className="truncate">
           {item.company_name || t('no_company')} · {item.job_title}
         </strong>
-        <span className="flex-shrink-0 font-mono text-xs text-neutral-500">{item.status}</span>
+        <span className="flex-shrink-0 font-mono text-xs text-fg-subtle">{item.status}</span>
       </div>
-      <div className="text-sm text-neutral-600">
+      <div className="text-sm text-fg-muted">
         {item.department} · {item.salary_range}
       </div>
-      <div className="text-xs text-neutral-400">
+      <div className="text-xs text-fg-subtle">
         {t('updated_at', { date: new Date(item.last_active_at).toLocaleDateString() })}
       </div>
     </Link>

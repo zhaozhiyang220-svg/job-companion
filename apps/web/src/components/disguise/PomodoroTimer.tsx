@@ -20,7 +20,7 @@ export function PomodoroTimer() {
         {m}:{s}
       </div>
       <div className="flex gap-2">
-        <button onClick={() => setRunning((r) => !r)} className="border border-black px-4 py-2">
+        <button onClick={() => setRunning((r) => !r)} className="border border-fg px-4 py-2">
           {running ? 'Pause' : 'Start'}
         </button>
         <button
@@ -28,7 +28,7 @@ export function PomodoroTimer() {
             setSecs(25 * 60)
             setRunning(false)
           }}
-          className="border border-black px-4 py-2"
+          className="border border-fg px-4 py-2"
         >
           Reset
         </button>

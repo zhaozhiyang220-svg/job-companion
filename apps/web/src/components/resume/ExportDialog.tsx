@@ -32,7 +32,7 @@ export function ExportDialog({
       onClick={onClose}
     >
       <div
-        className="w-96 border border-black bg-white p-6 shadow-md"
+        className="w-96 border border-fg bg-bg p-6 shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-bold">{t('export_title')}</h3>
@@ -42,7 +42,7 @@ export function ExportDialog({
             <select
               value={lang}
               onChange={(e) => setLang(e.target.value)}
-              className="w-full border border-black px-2 py-1"
+              className="w-full border border-fg px-2 py-1"
             >
               <option value="zh">中文</option>
               <option value="en">English</option>
@@ -58,7 +58,7 @@ export function ExportDialog({
             <span>
               <b>{t('export_mask')}</b>
               <br />
-              <span className="text-xs text-neutral-500">{t('export_mask_hint')}</span>
+              <span className="text-xs text-fg-subtle">{t('export_mask_hint')}</span>
             </span>
           </label>
           {url && (
@@ -66,7 +66,7 @@ export function ExportDialog({
               href={url}
               target="_blank"
               rel="noreferrer"
-              className="flex h-10 items-center justify-center gap-1 border border-black bg-black text-white"
+              className="flex h-10 items-center justify-center gap-1 border border-fg bg-fg text-fg-inverse"
             >
               <Download className="h-4 w-4" aria-hidden="true" />
               {t('export_download')}
@@ -74,13 +74,13 @@ export function ExportDialog({
           )}
         </div>
         <div className="mt-4 flex justify-end gap-2">
-          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-neutral-100">
+          <button onClick={onClose} className="h-10 px-3 text-sm hover:bg-bg-muted">
             {t('close')}
           </button>
           <button
             onClick={go}
             disabled={exp.isPending}
-            className="h-10 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800 disabled:opacity-40"
+            className="h-10 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90 disabled:opacity-40"
           >
             {exp.isPending ? t('export_doing') : url ? t('export_again') : t('export_go')}
           </button>

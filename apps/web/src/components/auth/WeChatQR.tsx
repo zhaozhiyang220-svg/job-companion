@@ -13,13 +13,13 @@ export function WeChatQR() {
       .catch(() => setQrUrl(null))
   }, [])
 
-  if (!qrUrl) return <p className="text-sm text-neutral-600">{t('wechat_scan')}…</p>
+  if (!qrUrl) return <p className="text-sm text-fg-muted">{t('wechat_scan')}…</p>
   return (
     <a
       href={qrUrl}
       target="_blank"
       rel="noreferrer"
-      className="inline-block border border-black px-4 py-3 text-sm hover:bg-neutral-50"
+      className="inline-block border border-fg px-4 py-3 text-sm hover:bg-bg-subtle"
     >
       {t('wechat_scan')}
     </a>

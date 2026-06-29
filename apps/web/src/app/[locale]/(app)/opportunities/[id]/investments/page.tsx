@@ -15,7 +15,7 @@ export default function InvestmentsTab({ params }: { params: Promise<{ id: strin
         <h2 className="text-xl font-bold tracking-tight">{t('title')}</h2>
         <button
           onClick={() => setOpen(true)}
-          className="inline-flex h-10 items-center gap-2 border border-black bg-black px-4 text-sm text-white hover:bg-neutral-800"
+          className="inline-flex h-10 items-center gap-2 border border-fg bg-fg px-4 text-sm text-fg-inverse hover:opacity-90"
         >
           <Plus className="h-4 w-4" aria-hidden="true" />
           {t('new')}

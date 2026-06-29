@@ -11,7 +11,7 @@ export function DisguiseToggle() {
     <>
       <button
         onClick={toggle}
-        className="inline-flex h-8 items-center gap-1 border border-neutral-300 px-2 text-sm hover:border-black"
+        className="inline-flex h-8 items-center gap-1 border border-border px-2 text-sm hover:border-fg"
         title="Ctrl+`"
         aria-label={t('disguise')}
       >

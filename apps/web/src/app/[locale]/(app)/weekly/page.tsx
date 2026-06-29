@@ -16,13 +16,13 @@ export default function WeeklyPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+        <h1 className="heading">{t('title')}</h1>
         <div className="flex items-center gap-2">
           <WeekPicker value={weekOf} onChange={setWeekOf} />
           <button
             onClick={() => refresh.mutate(weekOf)}
             disabled={refresh.isPending}
-            className="inline-flex h-8 items-center gap-1 border border-black bg-black px-3 text-sm text-white hover:bg-neutral-800 disabled:opacity-40"
+            className="inline-flex h-8 items-center gap-1 border border-fg bg-fg px-3 text-sm text-fg-inverse hover:opacity-90 disabled:opacity-40"
           >
             <RefreshCw className="h-4 w-4" aria-hidden="true" />
             {refresh.isPending ? t('refreshing') : t('refresh')}
