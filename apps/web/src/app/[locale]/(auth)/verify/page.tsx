@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { api } from '@/lib/api'
 
-export default function VerifyPage() {
+function VerifyInner() {
   const params = useSearchParams()
   const router = useRouter()
   const { locale } = useParams<{ locale: string }>()
@@ -38,5 +38,15 @@ export default function VerifyPage() {
         <p className="text-sm text-neutral-600">{t('verifying')}</p>
       )}
     </main>
+  )
+}
+
+// useSearchParams 必须包在 Suspense 内，否则生产构建（next build/start）下
+// 服务端预渲染与客户端水合不一致，触发 React #418 整页白屏。
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={null}>
+      <VerifyInner />
+    </Suspense>
   )
 }
