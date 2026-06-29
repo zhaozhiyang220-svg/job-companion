@@ -5,6 +5,11 @@ services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
+    # 某些主机内核上 Docker 默认 seccomp 会拦掉 initdb 用的系统调用（如 fallocate），
+    # 表现为写 pg_wal/postmaster.pid 时 EPERM；放开 seccomp 解决，label:disable 兜底 SELinux。
+    security_opt:
+      - seccomp:unconfined
+      - label:disable
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-jc}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env.prod}
