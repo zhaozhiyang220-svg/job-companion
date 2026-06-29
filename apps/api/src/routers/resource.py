@@ -143,6 +143,11 @@ def delete_resource(
     rid: UUID, user: User = Depends(current_user), db: Session = Depends(get_db)
 ) -> None:
     r = _get_resource(db, rid, user)
+    # 先清理关联行，避免外键约束阻止删除（合集/岗位关联均指向该资源）
+    db.query(ResourceCollectionLink).filter(ResourceCollectionLink.resource_id == rid).delete()
+    db.query(ApplicationResourceLink).filter(
+        ApplicationResourceLink.resource_item_id == rid
+    ).delete()
     db.delete(r)
     db.commit()
 
