@@ -49,10 +49,25 @@
 
     --color-destructive: #f87171;
     --color-success: #4ade80;
+
+    /* 让原生控件（输入框/滚动条/resize 手柄）按深色渲染 */
+    color-scheme: dark;
   }
 
   * {
     border-color: var(--color-border);
+  }
+
+  /* 原生表单控件兜底深色（未显式设 bg 的 input/textarea/select）*/
+  input,
+  textarea,
+  select {
+    background-color: var(--color-bg-subtle);
+    color: var(--color-fg);
+  }
+  ::placeholder {
+    color: var(--color-fg-subtle);
+    opacity: 1;
   }
 
   html {
