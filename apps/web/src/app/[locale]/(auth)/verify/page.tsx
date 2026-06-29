@@ -1,12 +1,11 @@
 'use client'
 import { Suspense, useEffect, useState } from 'react'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { api } from '@/lib/api'
 
 function VerifyInner() {
   const params = useSearchParams()
-  const router = useRouter()
   const { locale } = useParams<{ locale: string }>()
   const t = useTranslations('auth')
   const [err, setErr] = useState<string | null>(null)
@@ -23,10 +22,12 @@ function VerifyInner() {
     })
       .then(async () => {
         const me = await api<{ persona_type: string | null }>('/api/v1/me')
-        router.replace(me.persona_type ? `/${locale}/dashboard` : `/${locale}/onboarding`)
+        // 登录刚写入 cookie，用整页跳转而非客户端路由：浏览器带新 cookie 干净重载，
+        // 避免目标页 RSC 请求与新会话竞态导致的瞬时 404。
+        window.location.replace(me.persona_type ? `/${locale}/dashboard` : `/${locale}/onboarding`)
       })
       .catch((e) => setErr(String(e)))
-  }, [params, router, locale, t])
+  }, [params, locale, t])
 
   return (
     <main className="flex min-h-screen items-center justify-center p-8">
