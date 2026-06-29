@@ -182,6 +182,9 @@
   "master_resume": {
     "title": "Master Resume",
     "empty": "No master resume yet — start by uploading your existing resume",
+    "replace": "Re-upload",
+    "cancel_replace": "Cancel",
+    "replace_hint": "Uploading or re-intake will overwrite your current master resume cards",
     "choose_upload": "Upload resume",
     "choose_intake": "Let AI dig out my experience (recommended for grads)",
     "drop_or_click": "Drop a PDF / DOCX, or click to choose",

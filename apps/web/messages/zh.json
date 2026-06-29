@@ -182,6 +182,9 @@
   "master_resume": {
     "title": "我的主简历",
     "empty": "还没有主简历，先上传你的现有简历开始",
+    "replace": "重新上传",
+    "cancel_replace": "取消",
+    "replace_hint": "上传或重新录入会覆盖当前主简历的卡片",
     "choose_upload": "上传简历",
     "choose_intake": "让 AI 帮我挖经历（应届生推荐）",
     "drop_or_click": "拖入 PDF / DOCX，或点击选择",

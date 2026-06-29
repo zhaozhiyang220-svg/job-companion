@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { FileText, MessageSquare } from 'lucide-react'
+import { FileText, MessageSquare, RotateCcw } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { UploadDropzone } from '@/components/master-resume/UploadDropzone'
 import { IntakeDialog } from '@/components/master-resume/IntakeDialog'
@@ -14,19 +14,57 @@ export default function MasterResumePage() {
   const t = useTranslations('master_resume')
   const { data, refetch } = useMasterResume()
   const [mode, setMode] = useState<Mode>('choose')
+  const [replacing, setReplacing] = useState(false)
 
-  if (data) {
+  // 重新解析成功后：拉取新数据并退出替换态，回到卡片视图（新简历会覆盖旧的）
+  const finish = () => {
+    void refetch()
+    setReplacing(false)
+    setMode('choose')
+  }
+
+  // 已有主简历且不在替换流程：展示卡片 + 「重新上传」入口
+  if (data && !replacing) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+          <button
+            onClick={() => {
+              setReplacing(true)
+              setMode('choose')
+            }}
+            className="inline-flex items-center gap-1 border border-neutral-300 px-3 py-1.5 text-sm hover:border-black"
+          >
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />
+            {t('replace')}
+          </button>
+        </div>
         <ResumeCards data={data as MasterResumeData} />
       </div>
     )
   }
 
+  // 首次创建，或正在替换：上传 / 对话式录入
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+        {Boolean(data) && (
+          <button
+            onClick={() => {
+              setReplacing(false)
+              setMode('choose')
+            }}
+            className="border border-neutral-300 px-3 py-1.5 text-sm hover:border-black"
+          >
+            {t('cancel_replace')}
+          </button>
+        )}
+      </div>
+      {replacing && (
+        <p className="text-sm text-neutral-500">{t('replace_hint')}</p>
+      )}
       {mode === 'choose' && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <button
@@ -45,8 +83,8 @@ export default function MasterResumePage() {
           </button>
         </div>
       )}
-      {mode === 'upload' && <UploadDropzone onParsed={() => void refetch()} />}
-      {mode === 'intake' && <IntakeDialog onDone={() => void refetch()} />}
+      {mode === 'upload' && <UploadDropzone onParsed={finish} />}
+      {mode === 'intake' && <IntakeDialog onDone={finish} />}
     </div>
   )
 }
