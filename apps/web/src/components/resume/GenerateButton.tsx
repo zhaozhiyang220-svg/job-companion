@@ -15,19 +15,32 @@ export function GenerateButton({
   const gen = useGenerateBranch(appId)
 
   async function go() {
-    const b = await gen.mutateAsync({})
-    onGenerated(b.id)
+    try {
+      const b = await gen.mutateAsync({})
+      onGenerated(b.id)
+    } catch {
+      // 失败（如未建主简历）由下方提示展示，避免未捕获异常
+    }
   }
 
+  const needMaster = gen.isError && String(gen.error).includes('master resume not found')
+
   return (
-    <button
-      onClick={go}
-      disabled={gen.isPending}
-      className={`border border-black bg-black text-white hover:bg-neutral-800 disabled:opacity-40 ${
-        isFirst ? 'w-full py-6 text-lg' : 'h-10 px-4 text-sm'
-      }`}
-    >
-      {gen.isPending ? t('generating') : isFirst ? t('generate_first') : t('generate_next')}
-    </button>
+    <div className="space-y-2">
+      <button
+        onClick={go}
+        disabled={gen.isPending}
+        className={`border border-black bg-black text-white hover:bg-neutral-800 disabled:opacity-40 ${
+          isFirst ? 'w-full py-6 text-lg' : 'h-10 px-4 text-sm'
+        }`}
+      >
+        {gen.isPending ? t('generating') : isFirst ? t('generate_first') : t('generate_next')}
+      </button>
+      {gen.isError && (
+        <p role="alert" className="text-sm text-red-600">
+          {needMaster ? t('need_master') : t('generate_failed')}
+        </p>
+      )}
+    </div>
   )
 }

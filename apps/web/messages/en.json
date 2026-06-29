@@ -145,6 +145,8 @@
     "generate_first": "Generate first custom resume",
     "generate_next": "Generate another",
     "generating": "Generating…",
+    "need_master": "Create your master resume first, then generate a tailored version",
+    "generate_failed": "Generation failed, please try again",
     "match_score": "Match score",
     "keywords": "Keywords",
     "preferences": "Hidden preferences",

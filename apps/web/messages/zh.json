@@ -145,6 +145,8 @@
     "generate_first": "生成第一版定制简历",
     "generate_next": "再生成一版",
     "generating": "生成中…",
+    "need_master": "请先在「我的主简历」里创建主简历，再生成定制版本",
+    "generate_failed": "生成失败，请稍后重试",
     "match_score": "匹配评分",
     "keywords": "关键词",
     "preferences": "隐性偏好",

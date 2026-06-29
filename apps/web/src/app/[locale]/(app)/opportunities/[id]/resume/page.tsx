@@ -38,13 +38,14 @@ export default function ResumeTab({ params }: { params: Promise<{ id: string }> 
             <GenerateButton appId={appId} isFirst={false} onGenerated={setActiveId} />
           )}
         </div>
-        {!branches?.length && (
+        {!branches?.length ? (
           <div className="space-y-4">
             <p className="text-sm text-neutral-500">{t('no_branch')}</p>
             <GenerateButton appId={appId} isFirst onGenerated={setActiveId} />
           </div>
+        ) : (
+          branch && <ResumeWorkspace appId={appId} branch={branch} />
         )}
-        {branch && <ResumeWorkspace appId={appId} branch={branch} />}
       </section>
     </div>
   )
