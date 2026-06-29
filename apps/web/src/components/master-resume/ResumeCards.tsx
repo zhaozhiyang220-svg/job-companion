@@ -6,9 +6,16 @@ import { useCreateCard, useDiagnose } from '@/hooks/useMasterResume'
 import { AbilityCardItem } from './AbilityCardItem'
 import { ProjectCardItem } from './ProjectCardItem'
 import { ExperienceCardItem } from './ExperienceCardItem'
+import { DiagnosisReportView } from './DiagnosisReportView'
 import type { MasterResumeData } from './types'
 
-export function ResumeCards({ data }: { data: MasterResumeData }) {
+export function ResumeCards({
+  data,
+  onRebuild,
+}: {
+  data: MasterResumeData
+  onRebuild?: () => void
+}) {
   const t = useTranslations('master_resume')
   const addA = useCreateCard('ability')
   const addP = useCreateCard('project')
@@ -25,10 +32,20 @@ export function ResumeCards({ data }: { data: MasterResumeData }) {
         >
           {diag.isPending ? t('diagnosing') : t('diagnose')}
         </button>
-        {data.quality_score !== null && (
+        {data.quality_score !== null && !diag.data && (
           <span className="font-mono text-sm">{t('score', { score: data.quality_score })}</span>
         )}
       </div>
+      {diag.isError && (
+        <p role="alert" className="text-sm text-destructive">
+          {t('diagnose_failed')}
+        </p>
+      )}
+      {diag.data && (
+        <div className="border border-border p-5">
+          <DiagnosisReportView report={diag.data} onRebuild={onRebuild} />
+        </div>
+      )}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <Col title={t('ability')} onAdd={() => addA.mutate({ skill_name: t('new_ability'), level: 3 })}>
           {(data.ability_cards ?? []).map((c) => (

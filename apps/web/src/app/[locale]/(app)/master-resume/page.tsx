@@ -54,7 +54,13 @@ export default function MasterResumePage() {
             </Button>
           }
         />
-        <ResumeCards data={data as MasterResumeData} />
+        <ResumeCards
+          data={data as MasterResumeData}
+          onRebuild={() => {
+            setReplacing(true)
+            setMode('intake')
+          }}
+        />
       </div>
     )
   }

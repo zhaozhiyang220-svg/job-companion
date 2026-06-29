@@ -8,8 +8,12 @@ from src.ai.llm_client import LLMClient
 from src.ai.prompts.diagnose_quality import DIAGNOSE_QUALITY_SYSTEM
 from src.core.security import decrypt_field
 from src.models import MasterResume
+from src.schemas.diagnosis import DiagnosisReport
 
 _llm = LLMClient()
+
+# 综合分 < 此阈值判为"不合格简历"，引导用户去"AI 挖经历"重建
+QUALIFIED_THRESHOLD = 30
 
 
 def _to_input(r: MasterResume) -> dict[str, object]:
@@ -50,7 +54,7 @@ def _to_input(r: MasterResume) -> dict[str, object]:
     }
 
 
-async def diagnose(db: Session, master_resume_id: UUID, user_id: UUID) -> dict[str, object]:
+async def diagnose(db: Session, master_resume_id: UUID, user_id: UUID) -> DiagnosisReport:
     r = db.get(MasterResume, master_resume_id)
     if not r:
         raise ValueError("not found")
@@ -59,30 +63,25 @@ async def diagnose(db: Session, master_resume_id: UUID, user_id: UUID) -> dict[s
         model="auto-m1",
         system=DIAGNOSE_QUALITY_SYSTEM,
         messages=[{"role": "user", "content": payload}],
-        max_tokens=2048,
+        max_tokens=4096,
         user_id=user_id,
         scene="resume_diagnose",
     )
-    result: dict[str, object] = json_parse.loads(raw)
+    report = json_parse.validate(DiagnosisReport, raw)
 
-    weak_raw = result.get("weak_cards", [])
-    weak_ids: dict[tuple[str, str], list[str]] = {}
-    if isinstance(weak_raw, list):
-        for w in weak_raw:
-            if isinstance(w, dict):
-                reasons = w.get("reasons", [])
-                weak_ids[(str(w.get("type")), str(w.get("id")))] = (
-                    [str(x) for x in reasons] if isinstance(reasons, list) else []
-                )
+    # 后端派生 qualified（综合分阈值），保证与前端判定一致
+    report.qualified = report.structure.composite_score >= QUALIFIED_THRESHOLD
 
-    # 注：ExperienceCard 不含 is_weak（v1 schema 仅 ability/project 标含金量）
+    # 逐卡标记低含金量（保留原能力）
+    weak_ids: dict[tuple[str, str], list[str]] = {
+        (w.type, w.id): w.reasons for w in report.weak_cards
+    }
     for ac in r.ability_cards:
         ac.is_weak = ("ability", str(ac.id)) in weak_ids
     for pc in r.project_cards:
         pc.is_weak = ("project", str(pc.id)) in weak_ids
         pc.weak_reasons = weak_ids.get(("project", str(pc.id)), [])
 
-    score = result.get("overall_score")
-    r.quality_score = int(score) if isinstance(score, int) else None
+    r.quality_score = report.structure.composite_score
     db.commit()
-    return result
+    return report

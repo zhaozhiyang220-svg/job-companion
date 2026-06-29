@@ -8,6 +8,7 @@ from src.core.db import get_db
 from src.core.deps import current_user
 from src.core.security import decrypt_field, encrypt_field
 from src.models import AbilityCard, ExperienceCard, MasterResume, ProjectCard, User
+from src.schemas.diagnosis import DiagnosisReport
 from src.schemas.master_resume import (
     AbilityCardOut,
     ExperienceCardOut,
@@ -195,10 +196,10 @@ def delete_card(
     db.commit()
 
 
-@router.post("/diagnose")
+@router.post("/diagnose", response_model=DiagnosisReport)
 async def diagnose(
     user: User = Depends(current_user), db: Session = Depends(get_db)
-) -> dict[str, object]:
+) -> DiagnosisReport:
     r = _get_resume(user, db)
     return await diagnose_svc(db, r.id, user.id)
 
