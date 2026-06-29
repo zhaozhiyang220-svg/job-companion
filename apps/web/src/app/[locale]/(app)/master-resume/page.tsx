@@ -7,6 +7,8 @@ import { IntakeDialog } from '@/components/master-resume/IntakeDialog'
 import { ResumeCards } from '@/components/master-resume/ResumeCards'
 import type { MasterResumeData } from '@/components/master-resume/types'
 import { useMasterResume } from '@/hooks/useMasterResume'
+import { Button } from '@/components/ui/button'
+import { SectionLabel } from '@/components/ui/section-label'
 
 type Mode = 'choose' | 'upload' | 'intake'
 
@@ -23,23 +25,35 @@ export default function MasterResumePage() {
     setMode('choose')
   }
 
+  const Header = ({ action }: { action?: React.ReactNode }) => (
+    <div className="flex items-end justify-between gap-4">
+      <div>
+        <SectionLabel num="01">Master Resume</SectionLabel>
+        <h1 className="heading mt-2 text-fg">{t('title')}</h1>
+      </div>
+      {action}
+    </div>
+  )
+
   // 已有主简历且不在替换流程：展示卡片 + 「重新上传」入口
   if (data && !replacing) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
-          <button
-            onClick={() => {
-              setReplacing(true)
-              setMode('choose')
-            }}
-            className="inline-flex items-center gap-1 border border-neutral-300 px-3 py-1.5 text-sm hover:border-black"
-          >
-            <RotateCcw className="h-4 w-4" aria-hidden="true" />
-            {t('replace')}
-          </button>
-        </div>
+        <Header
+          action={
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                setReplacing(true)
+                setMode('choose')
+              }}
+            >
+              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+              {t('replace')}
+            </Button>
+          }
+        />
         <ResumeCards data={data as MasterResumeData} />
       </div>
     )
@@ -48,39 +62,38 @@ export default function MasterResumePage() {
   // 首次创建，或正在替换：上传 / 对话式录入
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
-        {Boolean(data) && (
-          <button
-            onClick={() => {
-              setReplacing(false)
-              setMode('choose')
-            }}
-            className="border border-neutral-300 px-3 py-1.5 text-sm hover:border-black"
-          >
-            {t('cancel_replace')}
-          </button>
-        )}
-      </div>
-      {replacing && (
-        <p className="text-sm text-neutral-500">{t('replace_hint')}</p>
-      )}
+      <Header
+        action={
+          Boolean(data) && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setReplacing(false)
+                setMode('choose')
+              }}
+            >
+              {t('cancel_replace')}
+            </Button>
+          )
+        }
+      />
+      {replacing && <p className="text-sm text-fg-muted">{t('replace_hint')}</p>}
       {mode === 'choose' && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <button
-            onClick={() => setMode('upload')}
-            className="flex flex-col items-center gap-3 border border-neutral-300 p-8 hover:border-black"
-          >
-            <FileText className="h-8 w-8" aria-hidden="true" />
-            {t('choose_upload')}
-          </button>
-          <button
-            onClick={() => setMode('intake')}
-            className="flex flex-col items-center gap-3 border border-neutral-300 p-8 hover:border-black"
-          >
-            <MessageSquare className="h-8 w-8" aria-hidden="true" />
-            {t('choose_intake')}
-          </button>
+          {[
+            { m: 'upload' as const, Icon: FileText, label: t('choose_upload') },
+            { m: 'intake' as const, Icon: MessageSquare, label: t('choose_intake') },
+          ].map(({ m, Icon, label }) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              className="flex flex-col items-center gap-3 border border-border p-10 text-center transition-colors hover:border-fg hover:bg-bg-subtle"
+            >
+              <Icon className="h-8 w-8 text-fg" aria-hidden="true" />
+              <span className="font-medium text-fg">{label}</span>
+            </button>
+          ))}
         </div>
       )}
       {mode === 'upload' && <UploadDropzone onParsed={finish} />}

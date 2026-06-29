@@ -2,85 +2,190 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
+/* ============================================================
+   Swiss Modernism 2.0 · Design Tokens (见 design/UI_UX_GUIDE.md §2)
+   ============================================================ */
 @layer base {
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.141 0.005 285.823);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.141 0.005 285.823);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.141 0.005 285.823);
-    --primary: oklch(0.21 0.006 285.885);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.967 0.001 286.375);
-    --muted-foreground: oklch(0.552 0.016 285.938);
-    --accent: oklch(0.967 0.001 286.375);
-    --accent-foreground: oklch(0.21 0.006 285.885);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.92 0.004 286.32);
-    --input: oklch(0.92 0.004 286.32);
-    --ring: oklch(0.705 0.015 286.067);
-    --chart-1: oklch(0.871 0.006 286.286);
-    --chart-2: oklch(0.552 0.016 285.938);
-    --chart-3: oklch(0.442 0.017 285.786);
-    --chart-4: oklch(0.37 0.013 285.805);
-    --chart-5: oklch(0.274 0.006 286.033);
-    --radius: 0.5rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.141 0.005 285.823);
-    --sidebar-primary: oklch(0.21 0.006 285.885);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.967 0.001 286.375);
-    --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-    --sidebar-border: oklch(0.92 0.004 286.32);
-    --sidebar-ring: oklch(0.705 0.015 286.067);
+    /* Primitive · 灰阶 */
+    --gray-0: #ffffff;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    --gray-1000: #000000;
+    /* Primitive · 单一 accent + 语义色 */
+    --orange-50: #fff1eb;
+    --orange-500: #ff4500;
+    --orange-600: #e63e00;
+    --red-600: #dc2626;
+    --green-600: #16a34a;
+
+    /* Semantic */
+    --color-bg: var(--gray-0);
+    --color-bg-subtle: var(--gray-50);
+    --color-bg-muted: var(--gray-100);
+    --color-bg-inverse: var(--gray-1000);
+
+    --color-fg: var(--gray-1000);
+    --color-fg-muted: var(--gray-600);
+    --color-fg-subtle: var(--gray-400);
+    --color-fg-inverse: var(--gray-0);
+
+    --color-border: var(--gray-200);
+    --color-border-strong: var(--gray-1000);
+
+    --color-accent: var(--orange-500);
+    --color-accent-hover: var(--orange-600);
+    --color-accent-fg: var(--gray-0);
+    --color-accent-soft: var(--orange-50);
+
+    --color-destructive: var(--red-600);
+    --color-success: var(--green-600);
   }
-  .dark {
-    --background: oklch(0.141 0.005 285.823);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.21 0.006 285.885);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.21 0.006 285.885);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.92 0.004 286.32);
-    --primary-foreground: oklch(0.21 0.006 285.885);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.274 0.006 286.033);
-    --muted-foreground: oklch(0.705 0.015 286.067);
-    --accent: oklch(0.274 0.006 286.033);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.552 0.016 285.938);
-    --chart-1: oklch(0.871 0.006 286.286);
-    --chart-2: oklch(0.552 0.016 285.938);
-    --chart-3: oklch(0.442 0.017 285.786);
-    --chart-4: oklch(0.37 0.013 285.805);
-    --chart-5: oklch(0.274 0.006 286.033);
-    --sidebar: oklch(0.21 0.006 285.885);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.274 0.006 286.033);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.552 0.016 285.938);
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans), var(--font-sans-cn), system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01', 'tnum';
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 中文段落微调（Noto Sans SC 偏宽松）*/
+  :lang(zh) {
+    letter-spacing: 0.01em;
+    font-feature-settings: normal;
+  }
+  :lang(zh) p,
+  :lang(zh) li {
+    line-height: 1.7;
+  }
+
+  /* focus ring 一律黑色 2px（双层模拟 ring-offset）*/
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-bg),
+      0 0 0 4px var(--color-fg);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+/* ============================================================
+   排版工具类 (type scale §2.2)
+   ============================================================ */
+@layer components {
+  .display-2xl {
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.04em;
   }
-  body {
-    @apply bg-background text-foreground;
+  .display-xl {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.96;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+  .display-lg {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .display-md {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .heading {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+  .subheading {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .label-xs {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  /* 数字/代码 */
+  .mono {
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* §NN 章节编号（Swiss 特色）*/
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+  }
+  .section-label::before {
+    content: '§';
+    margin-right: 0.3em;
+    color: var(--color-accent);
+  }
+
+  /* patch / version 标记 */
+  .patch-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 12px;
+    background: var(--color-bg-muted);
+    color: var(--color-fg);
+    border: 1px solid var(--color-border);
+  }
+}
+
+/* Reduced motion（强制）*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -10,11 +10,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <div className="flex min-h-screen">
         <SideNav />
         <div className="flex flex-1 flex-col">
-          <header className="flex h-12 items-center justify-end gap-3 border-b border-black px-4">
+          <header className="sticky top-0 z-40 flex h-14 items-center justify-end gap-3 border-b border-border bg-bg/90 px-6 backdrop-blur">
             <DisguiseToggle />
             <LocaleSwitcher />
           </header>
-          <main className="flex-1 p-8">{children}</main>
+          <main className="mx-auto w-full max-w-6xl flex-1 p-6 md:p-8">{children}</main>
         </div>
       </div>
     </SessionBootstrap>
