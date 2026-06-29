@@ -23,7 +23,9 @@ def request_link(db: Session, email: str, base_url: str) -> None:
         MagicLinkToken(token_hash=token_hash, email_lookup_hash=email_hash, expires_at=expires)
     )
     db.commit()
-    link = f"{base_url}/auth/verify?token={raw_token}"
+    # 前端 verify 页在路由组 (auth) 内，括号不进 URL → 实际路径是 /verify（不是 /auth/verify）。
+    # next-intl 中间件会把 /verify 重定向到带语言前缀的 /<locale>/verify。
+    link = f"{base_url}/verify?token={raw_token}"
     send_email(
         to=email,
         subject="登录 Job Companion",
