@@ -50,12 +50,18 @@ def validate_rewrite_intensity(original: str, new: str, max_pct: float = 0.30) -
     return (1 - ratio) <= max_pct
 
 
-def apply_operations(master: dict[str, object], ops: list[dict[str, object]]) -> dict[str, object]:
+def apply_operations(
+    master: dict[str, object], ops: list[dict[str, object]], *, strict: bool = False
+) -> dict[str, object]:
     """将 ops 应用到 master 副本上，返回带标记的渲染版本。
 
     标记字段：_emphasized / _hidden / _patched_fields / _inserted_keywords。
     master 形状：{ability_cards: [...], project_cards: [...], experience_cards: [...]}。
     内部对动态字典用 Any 操作（签名仍是 dict[str, object]）。
+
+    strict=True 时单字段改写超 30% 直接抛 RewriteTooLargeError（用于校验用户手动编辑）；
+    strict=False（默认）时静默跳过该改写、保留原文，其余操作照常应用（用于 AI 生成补丁，
+    护栏仍生效——大改写不会落地，但不连累整条定制流程）。
     """
     result: dict[str, Any] = copy.deepcopy(master)
     index: dict[str, tuple[str, int]] = {}
@@ -89,7 +95,10 @@ def apply_operations(master: dict[str, object], ops: list[dict[str, object]]) ->
             else:
                 original = str(card.get(field, ""))
             if not validate_rewrite_intensity(original, op["new_text"]):
-                raise RewriteTooLargeError(f"rewrite of {cid}.{field} exceeds 30% threshold")
+                if strict:
+                    raise RewriteTooLargeError(f"rewrite of {cid}.{field} exceeds 30% threshold")
+                continue  # 宽松模式：跳过超限改写，保留原文
+
             if "." in field:
                 top, sub = field.split(".", 1)
                 card.setdefault(top, {})[sub] = op["new_text"]

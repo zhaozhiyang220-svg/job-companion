@@ -227,7 +227,8 @@ def update_branch(
     b = _get_branch(db, app_id, branch_id)
     master = _serialize_master(_get_master(user, db))
     try:
-        rendered = apply_operations(master, body.patch)
+        # 用户手动编辑：严格校验，超 30% 改写直接拒绝
+        rendered = apply_operations(master, body.patch, strict=True)
     except RewriteTooLargeError as e:
         raise HTTPException(422, str(e)) from e
     b.patch = body.patch

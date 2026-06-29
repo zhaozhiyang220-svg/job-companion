@@ -55,19 +55,28 @@ def test_rewrite_within_threshold() -> None:
     assert "五十万人" in r["project_cards"][0]["star"]["result"]  # type: ignore[index]
 
 
-def test_rewrite_too_large_raises() -> None:
+def _too_large_op() -> list[dict[str, object]]:
+    return [
+        {
+            "type": "rewrite",
+            "card_id": "a1",
+            "field": "skill_name",
+            "new_text": "完全不同的能力名字写很长很长很长",
+        }
+    ]
+
+
+def test_rewrite_too_large_raises_in_strict_mode() -> None:
     with pytest.raises(RewriteTooLargeError):
-        apply_operations(
-            _master(),
-            [
-                {
-                    "type": "rewrite",
-                    "card_id": "a1",
-                    "field": "skill_name",
-                    "new_text": "完全不同的能力名字写很长很长很长",
-                }
-            ],
-        )
+        apply_operations(_master(), _too_large_op(), strict=True)
+
+
+def test_rewrite_too_large_skipped_when_lenient() -> None:
+    # 默认宽松：超限改写被跳过、保留原文，不抛错（用于 AI 生成补丁）
+    before = _master()["ability_cards"][0]["skill_name"]  # type: ignore[index]
+    r = apply_operations(_master(), _too_large_op())
+    assert r["ability_cards"][0]["skill_name"] == before  # type: ignore[index]
+    assert "skill_name" not in r["ability_cards"][0]["_patched_fields"]  # type: ignore[index]
 
 
 def test_reorder_moves_card() -> None:
