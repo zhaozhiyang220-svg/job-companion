@@ -14,14 +14,21 @@ const ITEMS: { key: string; href: string; Icon: LucideIcon }[] = [
   { key: 'coach', href: 'coach', Icon: MessageSquareQuote },
 ]
 
-export function SideNav() {
+export function SideNav({
+  className,
+  onNavigate,
+}: {
+  className?: string
+  onNavigate?: () => void
+}) {
   const t = useTranslations('nav')
   const { locale } = useParams<{ locale: string }>()
   const path = usePathname()
   return (
-    <nav className="flex w-64 flex-col gap-0.5 border-r border-fg bg-bg-subtle p-4">
+    <nav className={cn('flex w-64 flex-col gap-0.5 border-r border-fg bg-bg-subtle p-4', className)}>
       <Link
         href={`/${locale}/dashboard`}
+        onClick={onNavigate}
         className="mb-6 flex items-center gap-2 px-2 font-semibold tracking-tight"
       >
         <span className="mono flex h-7 w-7 items-center justify-center bg-fg text-sm text-fg-inverse">
@@ -36,6 +43,7 @@ export function SideNav() {
           <Link
             key={key}
             href={full}
+            onClick={onNavigate}
             aria-current={active ? 'page' : undefined}
             className={cn(
               'flex items-center gap-3 border-l-2 px-3 py-2 text-sm transition-colors',

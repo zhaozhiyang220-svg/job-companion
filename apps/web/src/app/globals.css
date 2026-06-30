@@ -50,8 +50,8 @@
     --color-destructive: #f87171;
     --color-success: #4ade80;
 
-    /* 让原生控件（输入框/滚动条/resize 手柄）按深色渲染 */
-    color-scheme: dark;
+    /* 强制深色：只用 dark 配色，抑制部分浏览器对页面的自动浅色重着色 */
+    color-scheme: only dark;
   }
 
   * {

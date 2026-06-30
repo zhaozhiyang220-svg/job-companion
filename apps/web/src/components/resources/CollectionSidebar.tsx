@@ -22,7 +22,7 @@ export function CollectionSidebar({
   const [newName, setNewName] = useState('')
 
   return (
-    <aside className="w-56 flex-shrink-0 space-y-1 border-r border-border pr-3 text-sm">
+    <aside className="w-full flex-shrink-0 space-y-1 border-border pr-3 text-sm md:w-56 md:border-r">
       <button
         onClick={() => onPick(null)}
         className={`flex w-full items-center gap-2 px-2 py-1 text-left ${

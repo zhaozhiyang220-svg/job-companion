@@ -24,9 +24,9 @@ export default function ResourcesPage() {
   const { data } = useResources({ type, collection_id: cid ?? undefined })
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col gap-6 md:flex-row">
       <CollectionSidebar currentId={cid} onPick={setCid} />
-      <div className="flex-1 space-y-4">
+      <div className="min-w-0 flex-1 space-y-4">
         <div className="flex items-center justify-between">
           <h1 className="heading">{t('title')}</h1>
           <button
